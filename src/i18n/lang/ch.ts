@@ -1,13 +1,13 @@
 export default {
   header: {
-    language: '言語'
+    language: '语言'
   },
   views: {
     dashboard: {
-      title: 'ダッシュボード'
+      title: '主页'
     },
     timer: {
-      title: 'タイマー'
+      title: '计时器'
     }
   }
 };

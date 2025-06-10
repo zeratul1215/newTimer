@@ -1,9 +1,10 @@
-.home {
-  height: 100%;
+.dashboard {
+  padding: 16px;
 }
 
 .title {
-  padding: 16px;
+  display: flex;
+  align-items: center;
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-semi-bold);
 }

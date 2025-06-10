@@ -1,11 +1,11 @@
 import i18n from 'i18next';
-import { DEFAULT_LOCALE, LOCALE_LIST } from '@/constants/locale';
 import { initReactI18next } from 'react-i18next';
-import enText from './lang/en';
-import jaText from './lang/ja';
-import koText from './lang/ko';
-import zhText from './lang/zh';
-import ztText from './lang/zt';
+import jaAdminText from './lang/ja';
+import enAdminText from './lang/en';
+import chAdminText from './lang/ch';
+
+export const DEFAULT_LOCALE = 'ja';
+export const LOCALE_LIST = ['en', 'ja'];
 
 declare module 'i18next' {
   interface CustomTypeOptions {
@@ -14,29 +14,19 @@ declare module 'i18next' {
 }
 
 export const resources = {
-  en: {
-    translation: {
-      ...enText
-    }
-  },
   ja: {
     translation: {
-      ...jaText
+      ...jaAdminText
     }
   },
-  ko: {
+  en: {
     translation: {
-      ...koText
+      ...enAdminText
     }
   },
   zh: {
     translation: {
-      ...zhText
-    }
-  },
-  zt: {
-    translation: {
-      ...ztText
+      ...chAdminText
     }
   }
 } as const;
