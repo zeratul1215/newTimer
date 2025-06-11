@@ -92,7 +92,9 @@
   padding: 8px 24px;
   color: #333;
   cursor: pointer;
-  transition: background 0.2s, border 0.2s;
+  transition:
+    background 0.2s,
+    border 0.2s;
 }
 .addBtns .addBtn:hover {
   background: #ffe082;
@@ -106,7 +108,8 @@
   margin-top: 32px;
 }
 
-.bottomBar .startBtn, .bottomBar .resetBtn {
+.bottomBar .startBtn,
+.bottomBar .resetBtn {
   flex: 1;
   background: #ffe082;
   border: none;
@@ -116,9 +119,9 @@
   color: #333;
   cursor: pointer;
   transition: background 0.2s;
-
 }
 
-.bottomBar .startBtn:hover, .bottomBar .resetBtn:hover {
+.bottomBar .startBtn:hover,
+.bottomBar .resetBtn:hover {
   background: #ffd54f;
 }

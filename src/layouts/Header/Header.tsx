@@ -9,12 +9,14 @@ const Header: React.FC = () => {
 
   const [lang, setLang] = useState(i18n.language);
 
-
-  const options = useMemo(() => [
-    { label: 'English', value: 'en' },
-    { label: '日本語', value: 'ja' },
-    { label: '中文', value: 'zh' },
-  ], []);
+  const options = useMemo(
+    () => [
+      { label: 'English', value: 'en' },
+      { label: '日本語', value: 'ja' },
+      { label: '中文', value: 'zh' }
+    ],
+    []
+  );
 
   return (
     <header className={styles.header}>
@@ -24,10 +26,10 @@ const Header: React.FC = () => {
         </a>
         <div className={styles.selectContainer}>
           <span className={styles.selectLabel}>{t('header.language')}</span>
-          <Select 
+          <Select
             options={options}
             value={lang}
-            onSelect={(value) => {
+            onSelect={value => {
               setLang(value);
               setLocale(value);
             }}
@@ -35,7 +37,6 @@ const Header: React.FC = () => {
             className={styles.select}
           />
         </div>
-        
       </div>
     </header>
   );
