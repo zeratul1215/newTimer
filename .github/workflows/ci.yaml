@@ -32,7 +32,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Add auth
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PACKAGE_READ }}" >> .npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.CI_READ }}" >> .npmrc
 
       - name: Install deps
         run: pnpm install
