@@ -1,8 +1,8 @@
-import { useTranslation } from 'react-i18next';
-import styles from './header.module.css';
-import { setLocale } from '../../i18n';
-import { Select } from '@linktivity/link-ui';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Select } from '@linktivity/link-ui';
+import { setLocale } from '../../i18n';
+import styles from './header.module.css';
 
 const Header: React.FC = () => {
   const { i18n, t } = useTranslation();

@@ -1,8 +1,8 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import jaAdminText from './lang/ja';
-import enAdminText from './lang/en';
-import chAdminText from './lang/ch';
+import jaText from './lang/ja';
+import enText from './lang/en';
+import zhText from './lang/zh';
 
 export const DEFAULT_LOCALE = 'ja';
 export const LOCALE_LIST = ['en', 'ja'];
@@ -16,17 +16,17 @@ declare module 'i18next' {
 export const resources = {
   ja: {
     translation: {
-      ...jaAdminText
+      ...jaText
     }
   },
   en: {
     translation: {
-      ...enAdminText
+      ...enText
     }
   },
   zh: {
     translation: {
-      ...chAdminText
+      ...zhText
     }
   }
 } as const;
