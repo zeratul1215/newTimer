@@ -4,23 +4,27 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prepare": "husky",
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --fix --max-warnings=0",
+    "format": "prettier --write --list-different \"./**/*.{js,jsx,ts,tsx,css,md,json,yaml}\" "
   },
   "dependencies": {
+    "i18next": "^23.10.1",
+    "mobx": "^6.13.1",
+    "mobx-react-lite": "^4.0.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-i18next": "^14.1.0",
+    "react-router": "^7.6.0",
+    "ress": "^5.0.2",
     "@linktivity/link-styles": "0.4.6",
     "@linktivity/link-hooks": "^0.10.3",
     "@linktivity/link-icons": "^0.10.3",
     "@linktivity/link-ui": "^0.10.3",
-    "@linktivity/link-utils": "^0.10.3",
-    "clsx": "^2.0.0",
-    "i18next": "^23.10.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-i18next": "^14.1.0",
-    "react-router": "^7.6.0",
-    "use-immer": "^0.9.0"
+    "@linktivity/link-utils": "^0.10.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.27.1",
