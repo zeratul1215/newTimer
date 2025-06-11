@@ -11,6 +11,9 @@
   &Running {
     background: #e3f2fd;
   }
+  &ShouldReset {
+    background: #e95e2f;
+  }
 }
 
 .topBar {
