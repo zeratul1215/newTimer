@@ -25,7 +25,6 @@ const CountDownTimer = ({
 }) => {
   const [seconds, setSeconds] = useState(INITIAL_SECONDS);
   const [rememberedSeconds, setRememberedSeconds] = useState(INITIAL_SECONDS);
-  // const [isRunning, setIsRunning] = useState(false);
   const [editingTime, setEditingTime] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
 
@@ -294,6 +293,7 @@ const CountDownTimer = ({
         </div>
       </div>
       <BottomBar
+        canReset={seconds !== rememberedSeconds}
         shouldReset={shouldReset}
         isRunning={isRunning}
         handlePause={handlePause}

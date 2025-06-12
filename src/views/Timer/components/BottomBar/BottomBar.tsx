@@ -2,12 +2,14 @@ import styles from './BottomBar.module.css';
 import { Button } from '@linktivity/link-ui';
 
 const BottomBar = ({
+  canReset = true,
   shouldReset = false,
   isRunning,
   handlePause,
   handleStart,
   handleReset
 }: {
+  canReset: boolean;
   shouldReset: boolean;
   isRunning: boolean;
   handlePause: () => void;
@@ -24,9 +26,11 @@ const BottomBar = ({
           {isRunning ? '⏸' : '▶️'}
         </Button>
       )}
-      <Button className={styles.resetBtn} onClick={handleReset}>
-        🔄
-      </Button>
+      {canReset && (
+        <Button className={styles.resetBtn} onClick={handleReset}>
+          🔄
+        </Button>
+      )}
     </div>
   );
 };
