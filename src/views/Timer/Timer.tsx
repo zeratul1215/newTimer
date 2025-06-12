@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styles from './timer.module.css';
 import cls from 'clsx';
 import CountDownTimer from './components/CountDownTimer/CountDownTimer';
 import { Button } from '@linktivity/link-ui';
 import StopWatchTimer from './components/StopWatchTimer';
+import { useTranslation } from 'react-i18next';
 
 const Timer = () => {
+  const { t } = useTranslation();
+
   const [activeTab, setActiveTab] = useState<'countDownTimer' | 'stopwatch'>(
     'countDownTimer'
   );
@@ -19,6 +22,21 @@ const Timer = () => {
     setIsStopwatchRunning(false);
   }, []);
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      // e.preventDefault();
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        if (activeTab === 'countDownTimer') {
+          setActiveTab('stopwatch');
+        } else {
+          setActiveTab('countDownTimer');
+        }
+      }
+    },
+    [activeTab, setActiveTab]
+  );
+
   return (
     <div
       className={cls(
@@ -30,6 +48,8 @@ const Timer = () => {
             ? styles.wholeContainerShouldReset
             : styles.wholeContainerIdle
       )}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
     >
       <div className={styles.topBar}>
         <Button
@@ -40,7 +60,7 @@ const Timer = () => {
             }
           }}
         >
-          タイマー
+          {t('views.timer.countDownTimer')}
         </Button>
         <Button
           className={styles.tab}
@@ -50,7 +70,7 @@ const Timer = () => {
             }
           }}
         >
-          ストップウォッチ
+          {t('views.timer.stopwatch')}
         </Button>
       </div>
       <CountDownTimer

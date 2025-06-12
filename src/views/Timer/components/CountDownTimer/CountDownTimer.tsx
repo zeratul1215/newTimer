@@ -3,6 +3,8 @@ import { Button } from '@linktivity/link-ui';
 import styles from './CountDownTimer.module.css';
 import BottomBar from '../BottomBar';
 import cls from 'clsx';
+import BackGroundCircle from '../BackGroundCircle';
+import ProgressCircle from '../ProgressCircle';
 
 const INITIAL_SECONDS = 5 * 60 * 10; // 5分钟
 
@@ -221,26 +223,25 @@ const CountDownTimer = ({
       >
         <svg width={400} height={400} className={styles.circleSvg}>
           {/* 背景 */}
-          <circle
-            className={styles.backgroundCircle}
-            cx={200}
-            cy={200}
-            r={radius}
-            fill="none"
-            stroke={isRunning ? '#0d47a1' : '#8d6e63'}
-            strokeWidth={10}
+          <BackGroundCircle
+            radius={radius}
+            isRunning={isRunning}
+            runningColor="#0d47a1"
+            idleColor="#8d6e63"
+            centerX={200}
+            centerY={200}
           />
           {/* 进度条 */}
-          <circle
-            className={styles.progressCircle}
-            cx={200}
-            cy={200}
-            r={radius}
-            fill="none"
-            stroke={isRunning ? '#90caf9' : '#ffe082'}
+          <ProgressCircle
+            radius={radius}
+            isRunning={isRunning}
+            totalTime={rememberedSeconds}
+            passedTime={seconds}
+            centerX={200}
+            centerY={200}
             strokeWidth={10}
-            strokeDasharray={circumference}
-            strokeDashoffset={offset}
+            runningColor="#90caf9"
+            idleColor="#ffe082"
           />
         </svg>
         <div className={styles.centerContent}>

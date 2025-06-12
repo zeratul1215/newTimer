@@ -1,0 +1,7 @@
+.progressCircle {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition:
+    stroke-dashoffset 0.1s linear,
+    stroke 0.5s ease;
+}

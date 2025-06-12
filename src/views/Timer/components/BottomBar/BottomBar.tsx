@@ -1,5 +1,6 @@
 import styles from './BottomBar.module.css';
 import { Button } from '@linktivity/link-ui';
+import { Refresh } from '@linktivity/link-icons';
 
 const BottomBar = ({
   canReset = true,
@@ -23,12 +24,12 @@ const BottomBar = ({
           className={styles.startBtn}
           onClick={isRunning ? handlePause : handleStart}
         >
-          {isRunning ? '⏸' : '▶️'}
+          {isRunning ? '⏸' : '▶'}
         </Button>
       )}
       {canReset && (
         <Button className={styles.resetBtn} onClick={handleReset}>
-          🔄
+          <Refresh className={styles.Icon} />
         </Button>
       )}
     </div>

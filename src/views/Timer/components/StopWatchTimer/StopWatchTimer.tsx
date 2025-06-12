@@ -2,6 +2,8 @@ import cls from 'clsx';
 import styles from './StopWatchTimer.module.css';
 import BottomBar from '../BottomBar';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import BackGroundCircle from '../BackGroundCircle';
+import RunningBall from '../RunningBall';
 
 function pad(num: number, len: number) {
   return num.toString().padStart(len, '0');
@@ -22,8 +24,6 @@ const StopWatchTimer = ({
   const [isReset, setIsReset] = useState(false);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const ballRef = useRef<SVGCircleElement>(null);
 
   useEffect(() => {
     if (isRunning) {
@@ -85,26 +85,23 @@ const StopWatchTimer = ({
       >
         <svg width={400} height={400} className={styles.circleSvg}>
           {/* 背景 */}
-          <circle
-            className={styles.backgroundCircle}
-            cx={200}
-            cy={200}
-            r={radius}
-            fill="none"
-            stroke={isRunning ? '#0e88ec' : '#ffe082'}
-            strokeWidth={10}
+          <BackGroundCircle
+            radius={radius}
+            isRunning={isRunning}
+            runningColor="#0e88ec"
+            idleColor="#ffe082"
+            centerX={200}
+            centerY={200}
           />
-          <circle
-            ref={ballRef}
-            className={cls(
-              styles.movingBall,
-              isRunning && styles.running,
-              isReset && styles.reset
-            )}
-            cx={200}
-            cy={200 - radius} // 从12点钟位置开始
-            r={10} // 小球半径
-            fill={isRunning ? '#0d47a1' : '#8d6e63'} // 小球颜色
+          <RunningBall
+            isRunning={isRunning}
+            isReset={isReset}
+            radius={radius}
+            runningColor="#0d47a1"
+            idleColor="#8d6e63"
+            centerX={200}
+            centerY={200}
+            ballRadius={10}
           />
         </svg>
         <div className={styles.centerContent}>

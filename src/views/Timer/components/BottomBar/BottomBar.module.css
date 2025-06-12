@@ -22,3 +22,8 @@
 .bottomBar .resetBtn:hover {
   background: var(--color-warning-light-hover);
 }
+
+.bottomBar .Icon {
+  width: 24px;
+  height: 24px;
+}
