@@ -1,0 +1,107 @@
+.show {
+  display: block;
+}
+
+.dontShow {
+  display: none;
+}
+
+.timerContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  height: 400px;
+  margin: 0 auto 32px auto;
+
+  &Idle {
+    cursor: default;
+  }
+
+  &Running {
+    cursor: pointer;
+  }
+}
+
+.circleSvg {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+  z-index: 1;
+}
+
+.circleSvg .backgroundCircle {
+  transition: stroke 0.5s ease;
+}
+
+.circleSvg .progressCircle {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition:
+    stroke-dashoffset 0.1s linear,
+    stroke 0.5s ease;
+}
+
+.centerContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.timeText {
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-tertiary-selected);
+  text-align: center;
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+
+  &CanSet {
+    cursor: pointer;
+  }
+}
+
+.timeInput {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-align: center;
+  background: none;
+  border: none;
+  outline: none;
+  width: 10ch;
+}
+
+.addBtns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 0;
+}
+.addBtns .addBtn {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: 20px;
+  font-size: var(--font-size-xl);
+  padding: 8px 24px;
+  color: var(--color-tertiary-selected);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border 0.2s;
+}
+.addBtns .addBtn:hover {
+  background: var(--color-warning-light-hover);
+  border-color: var(--color-warning-hover);
+}
