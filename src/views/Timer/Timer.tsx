@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './timer.module.css';
 import cls from 'clsx';
 import CountDownTimer from './components/CountDownTimer/CountDownTimer';
@@ -14,7 +14,9 @@ const Timer = () => {
   const [shouldReset, setShouldReset] = useState(false);
 
   // 为了过eslint
-  setIsStopwatchRunning(false);
+  useEffect(() => {
+    setIsStopwatchRunning(false);
+  }, []);
 
   return (
     <div
