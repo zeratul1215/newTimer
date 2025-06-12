@@ -25,7 +25,6 @@ const CountDownTimer = ({
 }) => {
   const [seconds, setSeconds] = useState(INITIAL_SECONDS);
   const [rememberedSeconds, setRememberedSeconds] = useState(INITIAL_SECONDS);
-  // const [isRunning, setIsRunning] = useState(false);
   const [editingTime, setEditingTime] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
 
@@ -70,7 +69,7 @@ const CountDownTimer = ({
         }
       }
     }
-  }, [seconds, isTimeUp, shouldReset, isRunning]);
+  }, [seconds, isTimeUp, shouldReset, isRunning, setIsRunning, setShouldReset]);
 
   // 时间格式化 用来显示非编辑状态下的时间
   const formatTime = useCallback((s: number) => {
@@ -124,8 +123,9 @@ const CountDownTimer = ({
     if (!isTimeUp) {
       setIsRunning(true);
     }
-  }, [isTimeUp]);
-  const handlePause = useCallback(() => setIsRunning(false), []);
+  }, [isTimeUp, setIsRunning]);
+
+  const handlePause = useCallback(() => setIsRunning(false), [setIsRunning]);
 
   const handleReset = useCallback(() => {
     if (shouldReset) {
@@ -133,7 +133,7 @@ const CountDownTimer = ({
     }
     setIsRunning(false);
     setSeconds(rememberedSeconds);
-  }, [rememberedSeconds, shouldReset]);
+  }, [rememberedSeconds, shouldReset, setIsRunning, setShouldReset]);
 
   const handleAdd = useCallback((addSec: number) => {
     setSeconds(prev => prev + addSec);
