@@ -28,6 +28,29 @@
   transition: stroke 0.5s ease;
 }
 
+.movingBall {
+  transform-origin: 200px 200px; /* 圆心位置 */
+  animation: rotate 4s linear infinite;
+  animation-play-state: paused; /* 默认暂停 */
+}
+
+.running {
+  animation-play-state: running; /* 运行时播放 */
+}
+
+.reset {
+  animation: none;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .centerContent {
   position: absolute;
   top: 0;

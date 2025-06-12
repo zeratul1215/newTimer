@@ -19,8 +19,11 @@ const StopWatchTimer = ({
   const radius = 180;
 
   const [seconds, setSeconds] = useState(0);
+  const [isReset, setIsReset] = useState(false);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const ballRef = useRef<SVGCircleElement>(null);
 
   useEffect(() => {
     if (isRunning) {
@@ -39,11 +42,17 @@ const StopWatchTimer = ({
 
   const handlePause = useCallback(() => setIsRunning(false), [setIsRunning]);
 
-  const handleStart = useCallback(() => setIsRunning(true), [setIsRunning]);
+  const handleStart = useCallback(() => {
+    setIsRunning(true);
+  }, [setIsRunning]);
 
   const handleReset = useCallback(() => {
     setSeconds(0);
     setIsRunning(false);
+    setIsReset(true);
+    setTimeout(() => {
+      setIsReset(false);
+    }, 10);
   }, [setSeconds, setIsRunning]);
 
   const formatTime = useCallback((s: number) => {
@@ -82,8 +91,20 @@ const StopWatchTimer = ({
             cy={200}
             r={radius}
             fill="none"
-            stroke={isRunning ? '#0d47a1' : '#8d6e63'}
+            stroke={isRunning ? '#0e88ec' : '#ffe082'}
             strokeWidth={10}
+          />
+          <circle
+            ref={ballRef}
+            className={cls(
+              styles.movingBall,
+              isRunning && styles.running,
+              isReset && styles.reset
+            )}
+            cx={200}
+            cy={200 - radius} // 从12点钟位置开始
+            r={10} // 小球半径
+            fill={isRunning ? '#0d47a1' : '#8d6e63'} // 小球颜色
           />
         </svg>
         <div className={styles.centerContent}>
