@@ -1,6 +1,6 @@
-import styles from './BottomBar.module.css';
 import { Button } from '@linktivity/link-ui';
 import cls from 'clsx';
+import styles from './BottomBar.module.css';
 
 const BottomBar = ({
   canReset = true,

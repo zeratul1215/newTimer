@@ -7,7 +7,9 @@ export default {
       title: '主页'
     },
     timer: {
-      title: '计时器'
+      title: '计时器',
+      countDownTimer: '倒计时',
+      stopwatch: '计时'
     }
   }
 };

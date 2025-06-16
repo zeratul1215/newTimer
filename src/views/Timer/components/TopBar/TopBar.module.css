@@ -1,21 +1,3 @@
-/* 背景色切换 */
-.wholeContainer {
-  min-height: 100%;
-  transition: background 0.5s;
-  box-sizing: border-box;
-  padding: 24px;
-
-  &Idle {
-    background: var(--color-warning-light-hover);
-  }
-  &Running {
-    background: var(--color-info-disabled);
-  }
-  &ShouldReset {
-    background: var(--color-danger-light-selected);
-  }
-}
-
 .topBar {
   display: flex;
   align-items: center;

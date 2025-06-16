@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
-import styles from './timer.module.css';
+import { useCallback, useState } from 'react';
 import cls from 'clsx';
-import CountDownTimer from './components/CountDownTimer/CountDownTimer';
-import { Button } from '@linktivity/link-ui';
+import { Helmet } from 'react-helmet-async';
+import CountDownTimer from '@Timer/components/CountDownTimer';
+import StopWatchTimer from '@Timer/components/StopWatchTimer';
+import TopBar from '@Timer/components/TopBar';
+import styles from './timer.module.css';
 
 const Timer = () => {
   const [activeTab, setActiveTab] = useState<'countDownTimer' | 'stopwatch'>(
@@ -13,60 +15,54 @@ const Timer = () => {
   const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
   const [shouldReset, setShouldReset] = useState(false);
 
-  // 为了过eslint
-  useEffect(() => {
-    setIsStopwatchRunning(false);
-  }, []);
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      // e.preventDefault();
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        if (activeTab === 'countDownTimer') {
+          setActiveTab('stopwatch');
+        } else {
+          setActiveTab('countDownTimer');
+        }
+      }
+    },
+    [activeTab]
+  );
 
   return (
-    <div
-      className={cls(
-        styles.wholeContainer,
-        (activeTab === 'countDownTimer' && isCountDownTimerRunning) ||
-          (activeTab === 'stopwatch' && isStopwatchRunning)
-          ? styles.wholeContainerRunning
-          : activeTab === 'countDownTimer' && shouldReset
-            ? styles.wholeContainerShouldReset
-            : styles.wholeContainerIdle
-      )}
-    >
-      <div className={styles.topBar}>
-        <Button
-          className={cls(
-            activeTab === 'countDownTimer'
-              ? styles.tabActive
-              : styles.tabInactive
-          )}
-          onClick={() => {
-            if (activeTab !== 'countDownTimer') {
-              setActiveTab('countDownTimer');
-            }
-          }}
-        >
-          タイマー
-        </Button>
-        <Button
-          className={cls(
-            activeTab === 'stopwatch' ? styles.tabActive : styles.tabInactive
-          )}
-          onClick={() => {
-            if (activeTab !== 'stopwatch') {
-              setActiveTab('stopwatch');
-            }
-          }}
-        >
-          ストップウォッチ
-        </Button>
+    <>
+      <Helmet>
+        <title>计时器</title>
+      </Helmet>
+      <div
+        className={cls(
+          styles.wholeContainer,
+          (activeTab === 'countDownTimer' && isCountDownTimerRunning) ||
+            (activeTab === 'stopwatch' && isStopwatchRunning)
+            ? styles.wholeContainerRunning
+            : activeTab === 'countDownTimer' && shouldReset
+              ? styles.wholeContainerShouldReset
+              : styles.wholeContainerIdle
+        )}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+      >
+        <TopBar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <CountDownTimer
+          active={activeTab === 'countDownTimer'}
+          isRunning={isCountDownTimerRunning}
+          setIsRunning={setIsCountDownTimerRunning}
+          shouldReset={shouldReset}
+          setShouldReset={setShouldReset}
+        />
+        <StopWatchTimer
+          active={activeTab === 'stopwatch'}
+          isRunning={isStopwatchRunning}
+          setIsRunning={setIsStopwatchRunning}
+        />
       </div>
-      <CountDownTimer
-        active={activeTab === 'countDownTimer'}
-        isRunning={isCountDownTimerRunning}
-        setIsRunning={setIsCountDownTimerRunning}
-        shouldReset={shouldReset}
-        setShouldReset={setShouldReset}
-      />
-      <>hello</>
-    </div>
+    </>
   );
 };
 
