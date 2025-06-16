@@ -116,9 +116,6 @@ const CountDownTimer = ({
 
   // 圆环动画参数
   const radius = 180;
-  const circumference = 2 * Math.PI * radius;
-  const progress = 1 - seconds / rememberedSeconds;
-  const offset = circumference * progress;
 
   // 按钮事件
   const handleStart = useCallback(() => {
