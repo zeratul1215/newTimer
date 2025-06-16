@@ -2,8 +2,8 @@ import { useCallback, useState } from 'react';
 import styles from './timer.module.css';
 import cls from 'clsx';
 import CountDownTimer from './components/CountDownTimer/CountDownTimer';
-import { Button } from '@linktivity/link-ui';
 import StopWatchTimer from './components/StopWatchTimer';
+import { Button } from '@linktivity/link-ui';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 
@@ -29,13 +29,13 @@ const Timer = () => {
         }
       }
     },
-    [activeTab, setActiveTab]
+    [activeTab]
   );
 
   return (
     <>
       <Helmet>
-        <title>计时器 | 我的应用</title>
+        <title>计时器</title>
       </Helmet>
       <div
         className={cls(
