@@ -5,6 +5,7 @@ import cls from 'clsx';
 import AddBtn from '../AddBtn';
 import BackGroundCircle from '../BackGroundCircle';
 import { colors } from '../../constants/colors';
+import ProgressCircle from '../ProgressCircle';
 
 const INITIAL_SECONDS = 5 * 60 * 10; // 5分钟
 
@@ -232,16 +233,16 @@ const CountDownTimer = ({
             centerY={200}
           />
           {/* 进度条 */}
-          <circle
-            className={styles.progressCircle}
-            cx={200}
-            cy={200}
-            r={radius}
-            fill="none"
-            stroke={isRunning ? colors.progress.running : colors.progress.idle}
+          <ProgressCircle
+            radius={radius}
+            isRunning={isRunning}
+            totalTime={rememberedSeconds}
+            passedTime={seconds}
+            centerX={200}
+            centerY={200}
             strokeWidth={10}
-            strokeDasharray={circumference}
-            strokeDashoffset={offset}
+            runningColor={colors.progress.running}
+            idleColor={colors.progress.idle}
           />
         </svg>
         <div className={styles.centerContent}>
