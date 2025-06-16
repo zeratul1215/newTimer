@@ -4,8 +4,10 @@ import cls from 'clsx';
 import CountDownTimer from './components/CountDownTimer/CountDownTimer';
 import { Button } from '@linktivity/link-ui';
 import StopWatchTimer from './components/StopWatchTimer';
+import { useTranslation } from 'react-i18next';
 
 const Timer = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'countDownTimer' | 'stopwatch'>(
     'countDownTimer'
   );
@@ -56,7 +58,7 @@ const Timer = () => {
             }
           }}
         >
-          タイマー
+          {t('views.timer.countDownTimer')}
         </Button>
         <Button
           className={cls(
@@ -68,7 +70,7 @@ const Timer = () => {
             }
           }}
         >
-          ストップウォッチ
+          {t('views.timer.stopwatch')}
         </Button>
       </div>
       <CountDownTimer

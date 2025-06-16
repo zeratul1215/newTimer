@@ -7,7 +7,9 @@ export default {
       title: 'ダッシュボード'
     },
     timer: {
-      title: 'タイマー'
+      title: 'タイマー',
+      countDownTimer: 'カウントダウンタイマー',
+      stopwatch: 'ストップウォッチ'
     }
   }
 };

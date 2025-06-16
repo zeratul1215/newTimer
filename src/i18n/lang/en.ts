@@ -7,7 +7,9 @@ export default {
       title: 'Dashboard'
     },
     timer: {
-      title: 'Timer'
+      title: 'Timer',
+      countDownTimer: 'Count Down Timer',
+      stopwatch: 'Stop Watch'
     }
   }
 };
