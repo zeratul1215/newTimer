@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import cls from 'clsx';
 import { Helmet } from 'react-helmet-async';
-import CountDownTimer from '@Timer/components/CountDownTimer/CountDownTimer';
+import CountDownTimer from '@Timer/components/CountDownTimer';
 import StopWatchTimer from '@Timer/components/StopWatchTimer';
 import TopBar from '@Timer/components/TopBar';
 import styles from './timer.module.css';

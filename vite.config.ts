@@ -12,7 +12,8 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
-        '@': resolve(__dirname, 'src')
+        '@': resolve(__dirname, 'src'),
+        '@Timer': resolve(__dirname, 'src/views/Timer')
       }
     },
     plugins: [
