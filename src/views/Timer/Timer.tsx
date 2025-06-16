@@ -3,12 +3,10 @@ import styles from './timer.module.css';
 import cls from 'clsx';
 import CountDownTimer from './components/CountDownTimer/CountDownTimer';
 import StopWatchTimer from './components/StopWatchTimer';
-import { Button } from '@linktivity/link-ui';
-import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
+import TopBar from './components/TopBar';
 
 const Timer = () => {
-  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'countDownTimer' | 'stopwatch'>(
     'countDownTimer'
   );
@@ -50,34 +48,7 @@ const Timer = () => {
         onKeyDown={handleKeyDown}
         tabIndex={0}
       >
-        <div className={styles.topBar}>
-          <Button
-            className={cls(
-              activeTab === 'countDownTimer'
-                ? styles.tabActive
-                : styles.tabInactive
-            )}
-            onClick={() => {
-              if (activeTab !== 'countDownTimer') {
-                setActiveTab('countDownTimer');
-              }
-            }}
-          >
-            {t('views.timer.countDownTimer')}
-          </Button>
-          <Button
-            className={cls(
-              activeTab === 'stopwatch' ? styles.tabActive : styles.tabInactive
-            )}
-            onClick={() => {
-              if (activeTab !== 'stopwatch') {
-                setActiveTab('stopwatch');
-              }
-            }}
-          >
-            {t('views.timer.stopwatch')}
-          </Button>
-        </div>
+        <TopBar activeTab={activeTab} setActiveTab={setActiveTab} />
         <CountDownTimer
           active={activeTab === 'countDownTimer'}
           isRunning={isCountDownTimerRunning}

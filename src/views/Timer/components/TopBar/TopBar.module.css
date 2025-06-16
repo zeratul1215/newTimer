@@ -1,0 +1,35 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: var(--font-size-2xl);
+  margin-bottom: 24px;
+
+  .tabActive,
+  .tabInactive {
+    color: var(--color-text-0);
+    border: none;
+    padding: 4px 16px;
+    font-weight: var(--font-weight-bold);
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background: var(--color-warning-light-hover);
+      border: none;
+    }
+
+    &:focus {
+      border: none;
+      background: var(--color-warning-light-selected);
+    }
+  }
+
+  .tabActive {
+    background: var(--color-warning-light-selected);
+  }
+
+  .tabInactive {
+    background: var(--color-warning-light-hover);
+  }
+}
