@@ -8,6 +8,7 @@ import { colors } from '../../constants/colors';
 import ProgressCircle from '../ProgressCircle';
 
 const INITIAL_SECONDS = 5 * 60 * 10; // 5分钟
+const TIME_FORMAT_REGEX = /(\d{2})(\d{2})(\d{2})/;
 
 function pad(num: number, len: number) {
   return num.toString().padStart(len, '0');
@@ -117,9 +118,9 @@ const CountDownTimer = ({
 
   // 圆环动画参数
   const radius = 180;
-  const circumference = 2 * Math.PI * radius;
-  const progress = 1 - seconds / rememberedSeconds;
-  const offset = circumference * progress;
+  // const circumference = 2 * Math.PI * radius;
+  // const progress = 1 - seconds / rememberedSeconds;
+  // const offset = circumference * progress;
 
   // 按钮事件
   const handleStart = useCallback(() => {
@@ -205,7 +206,7 @@ const CountDownTimer = ({
 
   // 渲染inputValue为hh:mm:ss
   const renderInputValue = useCallback(
-    (val: string) => val.replace(/(\d{2})(\d{2})(\d{2})/, '$1:$2:$3'),
+    (val: string) => val.replace(TIME_FORMAT_REGEX, '$1:$2:$3'),
     []
   );
 
