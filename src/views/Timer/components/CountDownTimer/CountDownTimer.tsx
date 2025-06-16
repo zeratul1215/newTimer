@@ -3,6 +3,8 @@ import styles from './CountDownTimer.module.css';
 import BottomBar from '../BottomBar';
 import cls from 'clsx';
 import AddBtn from '../AddBtn';
+import BackGroundCircle from '../BackGroundCircle';
+import { colors } from '../../constants/colors';
 
 const INITIAL_SECONDS = 5 * 60 * 10; // 5分钟
 
@@ -221,14 +223,13 @@ const CountDownTimer = ({
       >
         <svg width={400} height={400} className={styles.circleSvg}>
           {/* 背景 */}
-          <circle
-            className={styles.backgroundCircle}
-            cx={200}
-            cy={200}
-            r={radius}
-            fill="none"
-            stroke={isRunning ? '#0d47a1' : '#8d6e63'}
-            strokeWidth={10}
+          <BackGroundCircle
+            radius={radius}
+            isRunning={isRunning}
+            runningColor={colors.background.running}
+            idleColor={colors.background.idle}
+            centerX={200}
+            centerY={200}
           />
           {/* 进度条 */}
           <circle
@@ -237,7 +238,7 @@ const CountDownTimer = ({
             cy={200}
             r={radius}
             fill="none"
-            stroke={isRunning ? '#90caf9' : '#ffe082'}
+            stroke={isRunning ? colors.progress.running : colors.progress.idle}
             strokeWidth={10}
             strokeDasharray={circumference}
             strokeDashoffset={offset}
