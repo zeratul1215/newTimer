@@ -7,8 +7,9 @@ import BackGroundCircle from '../BackGroundCircle';
 import { colors } from '../../constants/colors';
 import ProgressCircle from '../ProgressCircle';
 
-const INITIAL_SECONDS = 5 * 60 * 10; // 5分钟
+const INITIAL_SECONDS = 0;
 const TIME_FORMAT_REGEX = /(\d{2})(\d{2})(\d{2})/;
+const MAX_TIME_SECONDS = 99 * 3600 * 10 + 59 * 60 * 10 + 59 * 10; // 99:59:59 in tenths of seconds
 
 function pad(num: number, len: number) {
   return num.toString().padStart(len, '0');
@@ -163,11 +164,7 @@ const CountDownTimer = ({
 
   const handleInputBlur = useCallback(() => {
     const parsed = parseTime(inputValue);
-    if (
-      parsed !== null &&
-      parsed >= 0 &&
-      parsed <= 99 * 3600 * 10 + 59 * 60 * 10 + 59 * 10
-    ) {
+    if (parsed !== null && parsed >= 0 && parsed <= MAX_TIME_SECONDS) {
       setSeconds(parsed);
       setRememberedSeconds(parsed);
     }
