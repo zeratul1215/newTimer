@@ -3,6 +3,7 @@ import styles from './timer.module.css';
 import cls from 'clsx';
 import CountDownTimer from './components/CountDownTimer/CountDownTimer';
 import { Button } from '@linktivity/link-ui';
+import StopWatchTimer from './components/StopWatchTimer';
 
 const Timer = () => {
   const [activeTab, setActiveTab] = useState<'countDownTimer' | 'stopwatch'>(
@@ -65,7 +66,11 @@ const Timer = () => {
         shouldReset={shouldReset}
         setShouldReset={setShouldReset}
       />
-      <>hello</>
+      <StopWatchTimer
+        active={activeTab === 'stopwatch'}
+        isRunning={isStopwatchRunning}
+        setIsRunning={setIsStopwatchRunning}
+      />
     </div>
   );
 };
