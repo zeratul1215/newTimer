@@ -9,11 +9,11 @@ import { useTitle } from '@/hooks';
 import styles from './timer.module.css';
 
 const Timer = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'countDownTimer' | 'stopwatch'>(
     'countDownTimer'
   );
 
-  const { t } = useTranslation();
 
   const [isCountDownTimerRunning, setIsCountDownTimerRunning] = useState(false);
   const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
