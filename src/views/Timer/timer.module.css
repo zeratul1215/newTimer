@@ -1,0 +1,45 @@
+/* 背景色切换 */
+.wholeContainer {
+  min-height: 100%;
+  transition: background 0.5s;
+  box-sizing: border-box;
+  padding: 24px;
+
+  &Idle {
+    background: var(--color-warning-light-hover);
+  }
+  &Running {
+    background: var(--color-info-disabled);
+  }
+  &ShouldReset {
+    background: var(--color-danger-light-selected);
+  }
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: var(--font-size-2xl);
+  margin-bottom: 24px;
+}
+
+.topBar .tabActive {
+  background: var(--color-warning-light-selected);
+  color: var(--color-text-0);
+  border-radius: 20px;
+  padding: 4px 16px;
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+}
+
+.topBar .tabInactive {
+  background: var(--color-warning-light-hover);
+  color: var(--color-text-0);
+  border-radius: 20px;
+  padding: 4px 16px;
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+}

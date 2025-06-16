@@ -1,5 +1,13 @@
 export default {
-  common: {
-    account: 'アカウント'
+  header: {
+    language: '言語'
+  },
+  views: {
+    dashboard: {
+      title: 'ダッシュボード'
+    },
+    timer: {
+      title: 'タイマー'
+    }
   }
 };

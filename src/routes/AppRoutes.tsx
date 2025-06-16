@@ -1,9 +1,9 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes, useRouteError } from 'react-router';
-import { BaseLayout } from '@/layouts';
+import { Navigate, Route, Routes, useRouteError } from 'react-router';
+import BaseLayout from '../layouts/Base';
 
-const Home = lazy(() => import('@/views/Home'));
-const NotFound = lazy(() => import('@/views/NotFound'));
+const Dashboard = lazy(() => import('../views/Dashboard'));
+const Timer = lazy(() => import('../views/Timer/Timer'));
 
 function RootErrorBoundary() {
   const error = useRouteError() as Error;
@@ -25,8 +25,10 @@ const AppRoutes = () => {
         element={<BaseLayout />}
         errorElement={<RootErrorBoundary />}
       >
-        <Route index element={lazyView(<Home />)} />
-        <Route path="*" element={lazyView(<NotFound />)} />
+        <Route index element={<Navigate to="dashboard" replace />} />
+        <Route path="dashboard" element={lazyView(<Dashboard />)} />
+        <Route path="timer" element={lazyView(<Timer />)} />
+        <Route path="*" element={lazyView(<Dashboard />)} />
       </Route>
     </Routes>
   );
