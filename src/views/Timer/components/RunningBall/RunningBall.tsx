@@ -3,7 +3,6 @@ import styles from './RunningBall.module.css';
 
 const RunningBall = ({
   isRunning,
-  isReset,
   radius,
   runningColor,
   idleColor,
@@ -12,7 +11,6 @@ const RunningBall = ({
   ballRadius = 10
 }: {
   isRunning: boolean;
-  isReset: boolean;
   radius: number;
   runningColor?: string;
   idleColor?: string;
@@ -27,11 +25,7 @@ const RunningBall = ({
 
   return (
     <circle
-      className={cls(
-        styles.movingBall,
-        isRunning && styles.running,
-        isReset && styles.reset
-      )}
+      className={cls(styles.movingBall, isRunning && styles.running)}
       cx={centerX}
       cy={centerY - radius} // 从12点钟位置开始
       r={ballRadius} // 小球半径

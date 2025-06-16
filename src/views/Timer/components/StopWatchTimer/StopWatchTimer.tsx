@@ -18,7 +18,7 @@ const StopWatchTimer = React.memo(
     const radius = 180;
 
     const [seconds, setSeconds] = useState(0);
-    const [isReset, setIsReset] = useState(false);
+    const [ballkey, setBallkey] = useState(0);
 
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -46,10 +46,7 @@ const StopWatchTimer = React.memo(
     const handleReset = useCallback(() => {
       setSeconds(0);
       setIsRunning(false);
-      setIsReset(true);
-      setTimeout(() => {
-        setIsReset(false);
-      }, 10);
+      setBallkey(prev => prev + 1);
     }, [setSeconds, setIsRunning]);
 
     const formatTime = useCallback((s: number) => {
@@ -91,8 +88,8 @@ const StopWatchTimer = React.memo(
               centerY={200}
             />
             <RunningBall
+              key={ballkey}
               isRunning={isRunning}
-              isReset={isReset}
               radius={radius}
               runningColor={colors.background.running}
               idleColor={colors.background.idle}
