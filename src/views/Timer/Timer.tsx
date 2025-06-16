@@ -32,7 +32,11 @@ const Timer = () => {
     >
       <div className={styles.topBar}>
         <Button
-          className={styles.tabActive}
+          className={cls(
+            activeTab === 'countDownTimer'
+              ? styles.tabActive
+              : styles.tabInactive
+          )}
           onClick={() => {
             if (activeTab !== 'countDownTimer') {
               setActiveTab('countDownTimer');
@@ -42,7 +46,9 @@ const Timer = () => {
           タイマー
         </Button>
         <Button
-          className={styles.tab}
+          className={cls(
+            activeTab === 'stopwatch' ? styles.tabActive : styles.tabInactive
+          )}
           onClick={() => {
             if (activeTab !== 'stopwatch') {
               setActiveTab('stopwatch');
