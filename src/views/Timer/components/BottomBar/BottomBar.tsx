@@ -1,5 +1,6 @@
 import styles from './BottomBar.module.css';
 import { Button } from '@linktivity/link-ui';
+import cls from 'clsx';
 
 const BottomBar = ({
   canReset = true,
@@ -20,15 +21,24 @@ const BottomBar = ({
     <div className={styles.bottomBar}>
       {!shouldReset && (
         <Button
-          className={styles.startBtn}
+          className={cls(
+            styles.startBtn,
+            isRunning ? styles.startBtnRunning : styles.startBtnIdle
+          )}
           onClick={isRunning ? handlePause : handleStart}
         >
-          {isRunning ? '⏸' : '▶️'}
+          {isRunning ? '■' : '►'}
         </Button>
       )}
       {canReset && (
-        <Button className={styles.resetBtn} onClick={handleReset}>
-          🔄
+        <Button
+          className={cls(
+            styles.resetBtn,
+            isRunning ? styles.resetBtnRunning : styles.resetBtnIdle
+          )}
+          onClick={handleReset}
+        >
+          ↻
         </Button>
       )}
     </div>
