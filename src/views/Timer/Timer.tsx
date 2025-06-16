@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styles from './timer.module.css';
 import cls from 'clsx';
 import CountDownTimer from './components/CountDownTimer/CountDownTimer';
@@ -14,10 +14,20 @@ const Timer = () => {
   const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
   const [shouldReset, setShouldReset] = useState(false);
 
-  // 为了过eslint
-  useEffect(() => {
-    setIsStopwatchRunning(false);
-  }, []);
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      // e.preventDefault();
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        if (activeTab === 'countDownTimer') {
+          setActiveTab('stopwatch');
+        } else {
+          setActiveTab('countDownTimer');
+        }
+      }
+    },
+    [activeTab, setActiveTab]
+  );
 
   return (
     <div
@@ -30,6 +40,8 @@ const Timer = () => {
             ? styles.wholeContainerShouldReset
             : styles.wholeContainerIdle
       )}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
     >
       <div className={styles.topBar}>
         <Button
