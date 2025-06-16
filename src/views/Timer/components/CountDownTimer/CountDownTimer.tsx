@@ -6,14 +6,11 @@ import AddBtn from '../AddBtn';
 import BackGroundCircle from '../BackGroundCircle';
 import { colors } from '../../constants/colors';
 import ProgressCircle from '../ProgressCircle';
+import { pad } from '../../utils/format';
 
 const INITIAL_SECONDS = 300 * 10;
 const TIME_FORMAT_REGEX = /(\d{2})(\d{2})(\d{2})/;
 const MAX_TIME_SECONDS = 99 * 3600 * 10 + 59 * 60 * 10 + 59 * 10; // 99:59:59 in tenths of seconds
-
-function pad(num: number, len: number) {
-  return num.toString().padStart(len, '0');
-}
 
 const CountDownTimer = ({
   active,

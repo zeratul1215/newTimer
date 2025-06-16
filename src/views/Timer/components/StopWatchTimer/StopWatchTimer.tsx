@@ -4,10 +4,8 @@ import BottomBar from '../BottomBar';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import BackGroundCircle from '../BackGroundCircle';
 import RunningBall from '../RunningBall';
-
-function pad(num: number, len: number) {
-  return num.toString().padStart(len, '0');
-}
+import { colors } from '../../constants/colors';
+import { pad } from '../../utils/format';
 
 const StopWatchTimer = ({
   active,
@@ -88,8 +86,8 @@ const StopWatchTimer = ({
           <BackGroundCircle
             radius={radius}
             isRunning={isRunning}
-            runningColor="#0e88ec"
-            idleColor="#ffe082"
+            runningColor={colors.progress.running}
+            idleColor={colors.progress.idle}
             centerX={200}
             centerY={200}
           />
@@ -97,8 +95,8 @@ const StopWatchTimer = ({
             isRunning={isRunning}
             isReset={isReset}
             radius={radius}
-            runningColor="#0d47a1"
-            idleColor="#8d6e63"
+            runningColor={colors.background.running}
+            idleColor={colors.background.idle}
             centerX={200}
             centerY={200}
             ballRadius={10}
