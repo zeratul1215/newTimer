@@ -1,15 +1,19 @@
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import cls from 'clsx';
-import { Helmet } from 'react-helmet-async';
 import CountDownTimer from '@Timer/components/CountDownTimer';
 import StopWatchTimer from '@Timer/components/StopWatchTimer';
 import TopBar from '@Timer/components/TopBar';
+import { useTitle } from '@/hooks';
+
 import styles from './timer.module.css';
 
 const Timer = () => {
   const [activeTab, setActiveTab] = useState<'countDownTimer' | 'stopwatch'>(
     'countDownTimer'
   );
+
+  const { t } = useTranslation();
 
   const [isCountDownTimerRunning, setIsCountDownTimerRunning] = useState(false);
   const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
@@ -30,11 +34,10 @@ const Timer = () => {
     [activeTab]
   );
 
+  useTitle(t('views.timer.title'));
+
   return (
     <>
-      <Helmet>
-        <title>计时器</title>
-      </Helmet>
       <div
         className={cls(
           styles.wholeContainer,
