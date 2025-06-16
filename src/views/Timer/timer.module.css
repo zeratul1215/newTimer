@@ -24,7 +24,7 @@
   margin-bottom: 24px;
 }
 
-.tabActive {
+.topBar .tabActive {
   background: var(--color-warning-light-selected);
   color: var(--color-text-0);
   border-radius: 20px;
@@ -34,10 +34,12 @@
   align-items: center;
 }
 
-.tab {
+.topBar .tabInactive {
+  background: var(--color-warning-light-hover);
   color: var(--color-text-0);
-  opacity: 0.7;
+  border-radius: 20px;
+  padding: 4px 18px;
+  font-weight: var(--font-weight-bold);
   display: flex;
   align-items: center;
-  gap: 4px;
 }

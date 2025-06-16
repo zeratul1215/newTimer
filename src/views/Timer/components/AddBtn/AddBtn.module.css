@@ -1,0 +1,17 @@
+.addBtn {
+  background: var(--color-warning-light);
+  border: 1px solid var(--color-warning-light-selected);
+  border-radius: 20px;
+  font-size: var(--font-size-xl);
+  padding: 8px 24px;
+  color: var(--color-tertiary-selected);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border 0.2s;
+}
+
+.addBtn:hover {
+  background: var(--color-warning-light-hover);
+  border-color: var(--color-warning-hover);
+}

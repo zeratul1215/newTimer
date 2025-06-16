@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { Button } from '@linktivity/link-ui';
 import styles from './CountDownTimer.module.css';
 import BottomBar from '../BottomBar';
 import cls from 'clsx';
+import AddBtn from '../AddBtn';
 
 const INITIAL_SECONDS = 5 * 60 * 10; // 5分钟
 
@@ -136,8 +136,8 @@ const CountDownTimer = ({
   }, [rememberedSeconds, shouldReset, setIsRunning, setShouldReset]);
 
   const handleAdd = useCallback((addSec: number) => {
-    setSeconds(prev => prev + addSec);
-    setRememberedSeconds(prev => prev + addSec);
+    setSeconds(prev => prev + addSec * 10);
+    setRememberedSeconds(prev => prev + addSec * 10);
   }, []);
 
   // 编辑时间相关
@@ -276,18 +276,8 @@ const CountDownTimer = ({
           )}
           {!isRunning && (
             <div className={styles.addBtns}>
-              <Button
-                className={styles.addBtn}
-                onClick={() => handleAdd(30 * 10)}
-              >
-                +0:30
-              </Button>
-              <Button
-                className={styles.addBtn}
-                onClick={() => handleAdd(60 * 10)}
-              >
-                +1:00
-              </Button>
+              <AddBtn seconds={30} onClick={handleAdd} />
+              <AddBtn seconds={60} onClick={handleAdd} />
             </div>
           )}
         </div>
