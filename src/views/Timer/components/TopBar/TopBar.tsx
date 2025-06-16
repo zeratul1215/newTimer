@@ -1,8 +1,8 @@
 import { Button } from '@linktivity/link-ui';
 import cls from 'clsx';
-import styles from './TopBar.module.css';
-import { useTranslation } from 'react-i18next';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import styles from './TopBar.module.css';
 
 const TopBar = React.memo(
   ({

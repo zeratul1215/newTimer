@@ -1,13 +1,12 @@
-import { useRef, useState, useEffect, useCallback } from 'react';
-import styles from './CountDownTimer.module.css';
-import BottomBar from '../BottomBar';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import cls from 'clsx';
-import AddBtn from '../AddBtn';
-import BackGroundCircle from '../BackGroundCircle';
-import { colors } from '../../constants/colors';
-import ProgressCircle from '../ProgressCircle';
-import { pad } from '../../utils/format';
-import React from 'react';
+import BottomBar from '@Timer/components/BottomBar';
+import AddBtn from '@Timer/components/AddBtn';
+import BackGroundCircle from '@Timer/components/BackGroundCircle';
+import { colors } from '@Timer/constants/colors';
+import ProgressCircle from '@Timer/components/ProgressCircle';
+import { pad } from '@Timer/utils/format';
+import styles from './CountDownTimer.module.css';
 
 const INITIAL_SECONDS = 300 * 10;
 const TIME_FORMAT_REGEX = /(\d{2})(\d{2})(\d{2})/;

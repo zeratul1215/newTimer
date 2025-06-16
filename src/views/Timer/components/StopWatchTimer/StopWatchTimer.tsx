@@ -1,11 +1,11 @@
 import cls from 'clsx';
-import styles from './StopWatchTimer.module.css';
-import BottomBar from '../BottomBar';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import BackGroundCircle from '../BackGroundCircle';
-import RunningBall from '../RunningBall';
-import { colors } from '../../constants/colors';
-import { pad } from '../../utils/format';
+import BottomBar from '@Timer/components/BottomBar';
+import BackGroundCircle from '@Timer/components/BackGroundCircle';
+import RunningBall from '@Timer/components/RunningBall';
+import { colors } from '@Timer/constants/colors';
+import { pad } from '@Timer/utils/format';
+import styles from './StopWatchTimer.module.css';
 
 interface StopWatchTimerProps {
   active: boolean;

@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
-import styles from './timer.module.css';
 import cls from 'clsx';
-import CountDownTimer from './components/CountDownTimer/CountDownTimer';
-import StopWatchTimer from './components/StopWatchTimer';
 import { Helmet } from 'react-helmet-async';
-import TopBar from './components/TopBar';
+import CountDownTimer from '@Timer/components/CountDownTimer/CountDownTimer';
+import StopWatchTimer from '@Timer/components/StopWatchTimer';
+import TopBar from '@Timer/components/TopBar';
+import styles from './timer.module.css';
 
 const Timer = () => {
   const [activeTab, setActiveTab] = useState<'countDownTimer' | 'stopwatch'>(
