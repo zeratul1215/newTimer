@@ -1,7 +1,7 @@
 import { forwardRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Select } from '@linktivity/link-ui';
 import cls from 'clsx';
+import { Select } from '@linktivity/link-ui';
 import { setLocale } from '../../i18n';
 import styles from './header.module.css';
 import { useBaseContext } from '../Base/context';
@@ -23,7 +23,7 @@ const Header = forwardRef<HTMLElement>((_props, ref) => {
   const { openMenu, setOpenMenu } = useBaseContext();
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} ref={ref}>
       <div className={styles.inner}>
         <button
           className={styles.menu}
