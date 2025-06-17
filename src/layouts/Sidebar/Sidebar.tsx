@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
-import cls from 'clsx';
-import styles from './sidebar.module.css';
 import { forwardRef } from 'react';
+import styles from './sidebar.module.css';
 import { useBaseContext } from '../Base/context';
+import cls from 'clsx';
 
 const Sidebar = forwardRef<HTMLElement>((_props, ref) => {
   const { t } = useTranslation();

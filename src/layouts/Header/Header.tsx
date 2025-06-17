@@ -1,10 +1,10 @@
 import { forwardRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import cls from 'clsx';
 import { Select } from '@linktivity/link-ui';
 import { setLocale } from '../../i18n';
 import styles from './header.module.css';
 import { useBaseContext } from '../Base/context';
+import cls from 'clsx';
 
 const Header = forwardRef<HTMLElement>((_props, ref) => {
   const { i18n, t } = useTranslation();
