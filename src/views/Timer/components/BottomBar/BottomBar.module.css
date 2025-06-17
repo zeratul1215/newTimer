@@ -22,7 +22,7 @@
     background: var(--color-info-hover) !important;
 
     &:hover {
-      background: var(--color-info-disabled) !important;
+      background: var(--color-info) !important;
     }
   }
 
