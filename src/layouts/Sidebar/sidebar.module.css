@@ -4,6 +4,7 @@
   flex: none;
   background-color: var(--color-bg-0);
   border-right: 1px solid var(--color-border-1);
+  z-index: var(--z-index-sidebar);
 }
 .inner {
   position: absolute;
@@ -43,5 +44,20 @@
 
   &.activated {
     background-color: var(--color-tertiary-light-selected);
+  }
+}
+
+@media (--view-lg) {
+  .sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transition: transform 0.3s ease;
+    transform: translate3d(-100%, 0, 0);
+
+    &.open {
+      transform: translate3d(0, 0, 0);
+    }
   }
 }
