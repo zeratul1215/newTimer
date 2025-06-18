@@ -1,10 +1,12 @@
-import { useMemo, useState } from 'react';
+import { forwardRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Select } from '@linktivity/link-ui';
 import { setLocale } from '../../i18n';
 import styles from './header.module.css';
+import { useBaseContext } from '../Base/context';
+import cls from 'clsx';
 
-const Header: React.FC = () => {
+const Header = forwardRef<HTMLElement>((_props, ref) => {
   const { i18n, t } = useTranslation();
 
   const [lang, setLang] = useState(i18n.language);
@@ -18,9 +20,21 @@ const Header: React.FC = () => {
     []
   );
 
+  const { openMenu, setOpenMenu } = useBaseContext();
+
   return (
-    <header className={styles.header}>
+    <header className={styles.header} ref={ref}>
       <div className={styles.inner}>
+        <button
+          className={styles.menu}
+          onClick={() => setOpenMenu(open => !open)}
+        >
+          <span
+            className={cls(styles.menuIcon, {
+              [styles.open]: openMenu
+            })}
+          ></span>
+        </button>
         <a href="/" className={styles.logo}>
           Link
         </a>
@@ -40,6 +54,6 @@ const Header: React.FC = () => {
       </div>
     </header>
   );
-};
+});
 
 export default Header;
