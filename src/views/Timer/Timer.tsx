@@ -23,6 +23,7 @@ const Timer = () => {
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
       // e.preventDefault();
+      console.log('Tab');
       if (e.key === 'Tab') {
         e.preventDefault();
         if (activeTab === 'countDownTimer') {
