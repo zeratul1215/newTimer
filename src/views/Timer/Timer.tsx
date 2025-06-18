@@ -49,7 +49,8 @@ const Timer = () => {
               : styles.wholeContainerIdle
         )}
         onKeyDown={handleKeyDown}
-        tabIndex={0}
+        // ref={focusTrapRef}
+        // tabIndex={0}
       >
         <TopBar activeTab={activeTab} setActiveTab={setActiveTab} />
         <CountDownTimer
