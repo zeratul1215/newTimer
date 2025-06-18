@@ -5,7 +5,6 @@ import CountDownTimer from '@Timer/components/CountDownTimer';
 import StopWatchTimer from '@Timer/components/StopWatchTimer';
 import TopBar from '@Timer/components/TopBar';
 import { useTitle } from '@/hooks';
-
 import styles from './timer.module.css';
 
 const Timer = () => {
