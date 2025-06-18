@@ -7,12 +7,14 @@ import TopBar from '@Timer/components/TopBar';
 import { useTitle } from '@/hooks';
 
 import styles from './timer.module.css';
+import { useFocusTrap } from '@linktivity/link-hooks';
 
 const Timer = () => {
   const [activeTab, setActiveTab] = useState<'countDownTimer' | 'stopwatch'>(
     'countDownTimer'
   );
   const { t } = useTranslation();
+  const focusTrapRef = useFocusTrap(true);
 
   const [isCountDownTimerRunning, setIsCountDownTimerRunning] = useState(false);
   const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
@@ -48,10 +50,12 @@ const Timer = () => {
               : styles.wholeContainerIdle
         )}
         onKeyDown={handleKeyDown}
-        // ref={focusTrapRef}
-        // tabIndex={0}
       >
-        <TopBar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <TopBar
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          ref={focusTrapRef}
+        />
         <CountDownTimer
           active={activeTab === 'countDownTimer'}
           isRunning={isCountDownTimerRunning}
