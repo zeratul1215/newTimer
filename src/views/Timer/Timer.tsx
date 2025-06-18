@@ -14,7 +14,6 @@ const Timer = () => {
   );
   const { t } = useTranslation();
 
-
   const [isCountDownTimerRunning, setIsCountDownTimerRunning] = useState(false);
   const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
   const [shouldReset, setShouldReset] = useState(false);
