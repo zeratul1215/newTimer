@@ -85,6 +85,10 @@ const CountDownTimer = React.memo(
 
     // 时间格式化 用来显示非编辑状态下的时间
     const formatTime = useCallback((s: number) => {
+      console.log('1');
+      console.log('2');
+      console.log('3');
+
       //将秒数转换为hh:mm:ss格式
       s = Math.ceil(s / 10);
       const h = Math.floor(s / 3600);
