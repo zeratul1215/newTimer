@@ -2,18 +2,19 @@ import { Button } from '@linktivity/link-ui';
 import cls from 'clsx';
 import styles from './TopBar.module.css';
 import { useTranslation } from 'react-i18next';
+import { forwardRef } from 'react';
 
-const TopBar = ({
-  activeTab,
-  setActiveTab
-}: {
-  activeTab: 'countDownTimer' | 'stopwatch';
-  setActiveTab: (tab: 'countDownTimer' | 'stopwatch') => void;
-}) => {
+const TopBar = forwardRef<
+  HTMLDivElement,
+  {
+    activeTab: 'countDownTimer' | 'stopwatch';
+    setActiveTab: (tab: 'countDownTimer' | 'stopwatch') => void;
+  }
+>(({ activeTab, setActiveTab }, ref) => {
   const { t } = useTranslation();
 
   return (
-    <div className={styles.topBar}>
+    <div className={styles.topBar} ref={ref}>
       <Button
         className={cls(
           activeTab === 'countDownTimer' ? styles.tabActive : styles.tabInactive
@@ -40,6 +41,6 @@ const TopBar = ({
       </Button>
     </div>
   );
-};
+});
 
 export default TopBar;
