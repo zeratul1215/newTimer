@@ -17,7 +17,11 @@ const StopWatchTimer = React.memo(
   ({ active, isRunning, setIsRunning }: StopWatchTimerProps) => {
     const radius = 180;
 
-    const [seconds, setSeconds] = useState(0);
+    const [seconds, setSeconds] = useState(
+      localStorage.getItem('stopWatchTimerSeconds')
+        ? parseInt(localStorage.getItem('stopWatchTimerSeconds') || '0')
+        : 0
+    );
     const [ballkey, setBallkey] = useState(0);
 
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -36,6 +40,10 @@ const StopWatchTimer = React.memo(
         if (intervalRef.current) clearInterval(intervalRef.current);
       };
     }, [isRunning]);
+
+    useEffect(() => {
+      localStorage.setItem('stopWatchTimerSeconds', seconds.toString());
+    }, [seconds]);
 
     const handlePause = useCallback(() => setIsRunning(false), [setIsRunning]);
 

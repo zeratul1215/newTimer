@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import cls from 'clsx';
 import CountDownTimer from '@Timer/components/CountDownTimer';
@@ -15,9 +15,25 @@ const Timer = () => {
   const { t } = useTranslation();
   const focusTrapRef = useFocusTrap(true);
 
-  const [isCountDownTimerRunning, setIsCountDownTimerRunning] = useState(false);
-  const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
+  const [isCountDownTimerRunning, setIsCountDownTimerRunning] = useState(
+    localStorage.getItem('isCountDownTimerRunning') === 'true' ? true : false
+  );
+  const [isStopwatchRunning, setIsStopwatchRunning] = useState(
+    localStorage.getItem('isStopwatchRunning') === 'true' ? true : false
+  );
   const [shouldReset, setShouldReset] = useState(false);
+
+  // 保存计时器状态到本地存储
+  useEffect(() => {
+    localStorage.setItem(
+      'isCountDownTimerRunning',
+      isCountDownTimerRunning.toString()
+    );
+  }, [isCountDownTimerRunning]);
+
+  useEffect(() => {
+    localStorage.setItem('isStopwatchRunning', isStopwatchRunning.toString());
+  }, [isStopwatchRunning]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
