@@ -4,11 +4,13 @@ import styles from './TopBar.module.css';
 import { useTranslation } from 'react-i18next';
 import { forwardRef } from 'react';
 
+import { TimerTab } from '@Timer/types/timerTab';
+
 const TopBar = forwardRef<
   HTMLDivElement,
   {
-    activeTab: 'countDownTimer' | 'stopwatch';
-    setActiveTab: (tab: 'countDownTimer' | 'stopwatch') => void;
+    activeTab: TimerTab;
+    setActiveTab: (tab: TimerTab) => void;
   }
 >(({ activeTab, setActiveTab }, ref) => {
   const { t } = useTranslation();
