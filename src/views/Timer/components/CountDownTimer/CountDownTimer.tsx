@@ -157,7 +157,6 @@ const CountDownTimer = React.memo(
       if (!isRunning) {
         // 转成6位数字字符串
         const tempSeconds = Math.ceil(seconds / 10);
-        console.log(tempSeconds);
         const h = Math.floor(tempSeconds / 3600);
         const m = Math.floor((tempSeconds % 3600) / 60);
         const s = tempSeconds % 60;

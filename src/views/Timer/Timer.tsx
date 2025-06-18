@@ -8,11 +8,10 @@ import { useTitle } from '@/hooks';
 
 import styles from './timer.module.css';
 import { useFocusTrap } from '@linktivity/link-hooks';
+import { TimerTab } from '@Timer/types/timerTab';
 
 const Timer = () => {
-  const [activeTab, setActiveTab] = useState<'countDownTimer' | 'stopwatch'>(
-    'countDownTimer'
-  );
+  const [activeTab, setActiveTab] = useState<TimerTab>('countDownTimer');
   const { t } = useTranslation();
   const focusTrapRef = useFocusTrap(true);
 
