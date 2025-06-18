@@ -21,7 +21,9 @@ const Timer = () => {
   const [isStopwatchRunning, setIsStopwatchRunning] = useState(
     localStorage.getItem('isStopwatchRunning') === 'true' ? true : false
   );
-  const [shouldReset, setShouldReset] = useState(false);
+  const [shouldReset, setShouldReset] = useState(
+    localStorage.getItem('shouldReset') === 'true' ? true : false
+  );
 
   // 保存计时器状态到本地存储
   useEffect(() => {
@@ -34,6 +36,10 @@ const Timer = () => {
   useEffect(() => {
     localStorage.setItem('isStopwatchRunning', isStopwatchRunning.toString());
   }, [isStopwatchRunning]);
+
+  useEffect(() => {
+    localStorage.setItem('shouldReset', shouldReset.toString());
+  }, [shouldReset]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
