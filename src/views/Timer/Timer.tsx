@@ -22,7 +22,6 @@ const Timer = () => {
     (e: React.KeyboardEvent<HTMLDivElement>) => {
       // e.preventDefault();
       if (e.key === 'Tab') {
-        console.log('Tab');
         e.preventDefault();
         if (activeTab === 'countDownTimer') {
           setActiveTab('stopwatch');
