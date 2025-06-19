@@ -17,7 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@Timer/*": ["src/views/Timer/*"]
+      "@Timer/*": ["src/views/Timer/*"],
+      "@Store/*": ["src/store/*"]
     },
 
     /* Linting */
