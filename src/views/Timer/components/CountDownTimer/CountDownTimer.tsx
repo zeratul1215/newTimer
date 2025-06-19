@@ -110,7 +110,7 @@ const CountDownTimer = observer(
     const parseTime = useCallback((str: string) => {
       //将用户输入的时间转化为秒数
       if (!/^\d{6}$/.test(str)) return null; //如果字符串不是六位数字，返回null
-      const h = parseInt(str.slice(0, 2), 10); //
+      const h = parseInt(str.slice(0, 2), 10);
       const m = parseInt(str.slice(2, 4), 10);
       const s = parseInt(str.slice(4, 6), 10);
       return (h * 3600 + m * 60 + s) * 10;
@@ -118,9 +118,6 @@ const CountDownTimer = observer(
 
     // 圆环动画参数
     const radius = 180;
-    // const circumference = 2 * Math.PI * radius;
-    // const progress = 1 - seconds / rememberedSeconds;
-    // const offset = circumference * progress;
 
     // 按钮事件
     const handleStart = useCallback(() => {

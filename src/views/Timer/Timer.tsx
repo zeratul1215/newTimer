@@ -10,15 +10,19 @@ import { useTitle } from '@/hooks';
 import { TimerTab } from '@Timer/types/timerTab';
 import timerStore from '@Store/modules/timer';
 import styles from './timer.module.css';
+import { Dialog } from '@linktivity/link-ui';
 
 const Timer = observer(() => {
+  const [visable, setVisable] = useState(
+    timerStore.CountDownRunning || timerStore.StopwatchRunning
+  );
   const [activeTab, setActiveTab] = useState<TimerTab>('countDownTimer');
   const { t } = useTranslation();
+
   const focusTrapRef = useFocusTrap(true);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
-      // e.preventDefault();
       if (e.key === 'Tab') {
         e.preventDefault();
         if (activeTab === 'countDownTimer') {
@@ -64,6 +68,24 @@ const Timer = observer(() => {
           isRunning={timerStore.StopwatchRunning}
           setIsRunning={value => timerStore.setStopwatchRunning(value)}
         />
+        <Dialog
+          visible={visable}
+          title="Timer"
+          onOK={() => {
+            setVisable(false);
+          }}
+          onCancel={() => {
+            setVisable(false);
+          }}
+          okText="Timer"
+          cancelText="Timer"
+        >
+          <div>
+            {timerStore.CountDownRunning && <p>CountDownRunning</p>}
+            {timerStore.StopwatchRunning && <p>StopwatchRunning</p>}
+            do you want to continue?
+          </div>
+        </Dialog>
       </div>
     </>
   );
