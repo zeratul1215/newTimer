@@ -22,49 +22,49 @@ interface CountDownTimerProps {
 }
 
 const CountDownTimer = observer(
-  React.memo(
-    ({
-      active,
-      isRunning,
-      setIsRunning,
-      shouldReset,
-      setShouldReset
-    }: CountDownTimerProps) => {
-      const [editingTime, setEditingTime] = useState(false);
-      const [isTimeUp, setIsTimeUp] = useState(false);
+  ({
+    active,
+    isRunning,
+    setIsRunning,
+    shouldReset,
+    setShouldReset
+  }: CountDownTimerProps) => {
+    const [editingTime, setEditingTime] = useState(false);
+    const [isTimeUp, setIsTimeUp] = useState(false);
+
 
       // inputValue 始终为6位数字字符串
       const [inputValue, setInputValue] = useState('');
       const inputRef = useRef<HTMLInputElement>(null);
       const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-      useEffect(() => {
-        if (isRunning && timerStore.CountDownSeconds > 0) {
-          //切换成运行状态，为计时器设置定时器
-          intervalRef.current = setInterval(() => {
-            timerStore.setCountDownSeconds(timerStore.CountDownSeconds - 1);
-          }, 100);
-        } else if (!isRunning && intervalRef.current) {
-          //切换成非运行状态，为计时器清楚定时器，防止内存泄漏
-          clearInterval(intervalRef.current);
-          intervalRef.current = null;
-        }
-        return () => {
-          if (intervalRef.current) clearInterval(intervalRef.current);
-        };
-      }, [isRunning]);
+    useEffect(() => {
+      if (isRunning && timerStore.CountDownSeconds > 0) {
+        //切换成运行状态，为计时器设置定时器
+        intervalRef.current = setInterval(() => {
+          timerStore.setCountDownSeconds(timerStore.CountDownSeconds - 1);
+        }, 100);
+      } else if (!isRunning && intervalRef.current) {
+        //切换成非运行状态，为计时器清楚定时器，防止内存泄漏
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      return () => {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+      };
+    }, [isRunning]);
 
-      useEffect(() => {
-        if (timerStore.CountDownSeconds == 0) {
-          //当时间归零的时候，判断是否是由于倒计时归零，
-          setIsTimeUp(true);
-          if (isRunning) {
-            setShouldReset(true);
-            setIsRunning(false);
-            if (intervalRef.current) {
-              clearInterval(intervalRef.current);
-              intervalRef.current = null;
-            }
+    useEffect(() => {
+      if (timerStore.CountDownSeconds == 0) {
+        //当时间归零的时候，判断是否是由于倒计时归零，
+        setIsTimeUp(true);
+        if (isRunning) {
+          setShouldReset(true);
+          setIsRunning(false);
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+
           }
         } else {
           if (isTimeUp) {
@@ -74,7 +74,9 @@ const CountDownTimer = observer(
             }
           }
         }
-      }, [isTimeUp, shouldReset, isRunning, setIsRunning, setShouldReset]);
+      }
+    }, [isTimeUp, shouldReset, isRunning, setIsRunning, setShouldReset]);
+
 
       // 时间格式化 用来显示非编辑状态下的时间
       const formatTime = useCallback((s: number) => {
@@ -135,47 +137,46 @@ const CountDownTimer = observer(
         [setIsRunning]
       );
 
-      const handleReset = useCallback(() => {
-        if (shouldReset) {
-          setShouldReset(false);
-        }
-        setIsRunning(false);
-        timerStore.setCountDownSeconds(timerStore.CountDownRememberedSeconds);
-      }, [shouldReset, setIsRunning, setShouldReset]);
+    const handleReset = useCallback(() => {
+      if (shouldReset) {
+        setShouldReset(false);
+      }
+      setIsRunning(false);
+      timerStore.setCountDownSeconds(timerStore.CountDownRememberedSeconds);
+    }, [shouldReset, setIsRunning, setShouldReset]);
 
-      const handleAdd = useCallback((addSec: number) => {
-        timerStore.setCountDownSeconds(
-          timerStore.CountDownSeconds + addSec * 10
-        );
-        timerStore.setCountDownRememberedSeconds(
-          timerStore.CountDownRememberedSeconds + addSec * 10
-        );
-      }, []);
+    const handleAdd = useCallback((addSec: number) => {
+      timerStore.setCountDownSeconds(timerStore.CountDownSeconds + addSec * 10);
+      timerStore.setCountDownRememberedSeconds(
+        timerStore.CountDownRememberedSeconds + addSec * 10
+      );
+    }, []);
 
-      // 编辑时间相关
-      const handleTimeClick = useCallback(() => {
-        if (!isRunning) {
-          // 转成6位数字字符串
-          const tempSeconds = Math.ceil(timerStore.CountDownSeconds / 10);
-          const h = Math.floor(tempSeconds / 3600);
-          const m = Math.floor((tempSeconds % 3600) / 60);
-          const s = tempSeconds % 60;
-          setInputValue(`${pad(h, 2)}${pad(m, 2)}${pad(s, 2)}`); //统一无论小时和分钟
-          setEditingTime(true);
-          setTimeout(() => {
-            inputRef.current?.focus();
-          }, 0);
-        }
-      }, [isRunning]);
+    // 编辑时间相关
+    const handleTimeClick = useCallback(() => {
+      if (!isRunning) {
+        // 转成6位数字字符串
+        const tempSeconds = Math.ceil(timerStore.CountDownSeconds / 10);
+        const h = Math.floor(tempSeconds / 3600);
+        const m = Math.floor((tempSeconds % 3600) / 60);
+        const s = tempSeconds % 60;
+        setInputValue(`${pad(h, 2)}${pad(m, 2)}${pad(s, 2)}`); //统一无论小时和分钟
+        setEditingTime(true);
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 0);
+      }
+    }, [isRunning]);
 
-      const handleInputBlur = useCallback(() => {
-        const parsed = parseTime(inputValue);
-        if (parsed !== null && parsed >= 0 && parsed <= MAX_TIME_SECONDS) {
-          timerStore.setCountDownSeconds(parsed);
-          timerStore.setCountDownRememberedSeconds(parsed);
-        }
-        setEditingTime(false);
-      }, [inputValue, parseTime]);
+    const handleInputBlur = useCallback(() => {
+      const parsed = parseTime(inputValue);
+      if (parsed !== null && parsed >= 0 && parsed <= MAX_TIME_SECONDS) {
+        timerStore.setCountDownSeconds(parsed);
+        timerStore.setCountDownRememberedSeconds(parsed);
+      }
+      setEditingTime(false);
+    }, [inputValue, parseTime]);
+
 
       const handleInputChange = useCallback(() => {
         // 禁止直接编辑
@@ -213,14 +214,80 @@ const CountDownTimer = observer(
         []
       );
 
-      return (
-        <div className={cls(active ? styles.show : styles.dontShow)}>
-          <div
-            className={cls(
-              styles.timerContainer,
-              isRunning
-                ? styles.timerContainerRunning
-                : styles.timerContainerIdle
+    return (
+      <div className={cls(active ? styles.show : styles.dontShow)}>
+        <div
+          className={cls(
+            styles.timerContainer,
+            isRunning ? styles.timerContainerRunning : styles.timerContainerIdle
+          )}
+          onClick={() => {
+            if (isRunning) {
+              handlePause();
+            }
+          }}
+        >
+          <svg width={400} height={400} className={styles.circleSvg}>
+            {/* 背景 */}
+            <BackGroundCircle
+              radius={radius}
+              isRunning={isRunning}
+              runningColor={colors.background.running}
+              idleColor={colors.background.idle}
+              centerX={200}
+              centerY={200}
+            />
+            {/* 进度条 */}
+            <ProgressCircle
+              radius={radius}
+              isRunning={isRunning}
+              totalTime={timerStore.CountDownRememberedSeconds}
+              passedTime={timerStore.CountDownSeconds}
+              centerX={200}
+              centerY={200}
+              strokeWidth={10}
+              runningColor={colors.progress.running}
+              idleColor={colors.progress.idle}
+            />
+          </svg>
+          <div className={styles.centerContent}>
+            {isRunning ? (
+              <div className={styles.timeText}>
+                {formatTime(timerStore.CountDownSeconds)}
+              </div>
+            ) : shouldReset ? (
+              <div className={styles.timeText} onClick={handleReset}>
+                {formatTime(timerStore.CountDownSeconds)}
+              </div>
+            ) : (
+              <div
+                className={cls(
+                  styles.timeText,
+                  editingTime ? '' : styles.timeTextCanSet
+                )}
+                onClick={handleTimeClick}
+                tabIndex={0}
+              >
+                {editingTime ? (
+                  <input
+                    ref={inputRef}
+                    className={styles.timeInput}
+                    value={renderInputValue(inputValue)}
+                    onChange={handleInputChange}
+                    onBlur={handleInputBlur}
+                    onKeyDown={handleInputKeyDown}
+                    maxLength={8}
+                  />
+                ) : (
+                  formatTime(timerStore.CountDownSeconds)
+                )}
+              </div>
+            )}
+            {!isRunning && (
+              <div className={styles.addBtns}>
+                <AddBtn seconds={30} onClick={handleAdd} />
+                <AddBtn seconds={60} onClick={handleAdd} />
+              </div>
             )}
             onClick={() => {
               if (isRunning) {
@@ -304,9 +371,20 @@ const CountDownTimer = observer(
             handleReset={handleReset}
           />
         </div>
-      );
-    }
-  )
+        <BottomBar
+          canReset={
+            timerStore.CountDownSeconds !==
+            timerStore.CountDownRememberedSeconds
+          }
+          shouldReset={shouldReset}
+          isRunning={isRunning}
+          handlePause={handlePause}
+          handleStart={handleStart}
+          handleReset={handleReset}
+        />
+      </div>
+    );
+  }
 );
 
 CountDownTimer.displayName = 'CountDownTimer';
