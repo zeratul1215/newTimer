@@ -104,6 +104,8 @@ const StopWatchTimer = React.memo(
               centerX={200}
               centerY={200}
               ballRadius={10}
+              currentTime={seconds}
+              totalTime={4}
             />
           </svg>
           <div className={styles.centerContent}>
