@@ -4,6 +4,11 @@ const storage = localStorage;
 const CountDownRunning = 'isCountDownTimerRunning';
 const StopwatchRunning = 'isStopwatchRunning';
 const ShouldReset = 'shouldReset';
+const CountDownSeconds = 'countDownSeconds';
+const StopwatchSeconds = 'stopwatchSeconds';
+const CountDownRememberedSeconds = 'countDownRememberedSeconds';
+
+const INITIAL_SECONDS = 300 * 10;
 
 export class timerStore {
   @observable accessor CountDownRunning =
@@ -12,9 +17,21 @@ export class timerStore {
     storage.getItem(StopwatchRunning) === 'true';
   @observable accessor ShouldReset = storage.getItem(ShouldReset) === 'true';
 
+  @observable accessor CountDownSeconds = storage.getItem(CountDownSeconds)
+    ? parseInt(storage.getItem(CountDownSeconds) || '0')
+    : INITIAL_SECONDS;
+  @observable accessor CountDownRememberedSeconds = storage.getItem(
+    CountDownRememberedSeconds
+  )
+    ? parseInt(storage.getItem(CountDownRememberedSeconds) || '0')
+    : INITIAL_SECONDS;
+
+  @observable accessor StopwatchSeconds = storage.getItem(StopwatchSeconds)
+    ? parseInt(storage.getItem(StopwatchSeconds) || '0')
+    : 0;
+
   @action
   setCountDownRunning(value: boolean) {
-    console.log('accessed');
     try {
       storage.setItem(CountDownRunning, value.toString());
     } finally {
@@ -41,18 +58,30 @@ export class timerStore {
   }
 
   @action
-  getCountDownRunning() {
-    return this.CountDownRunning;
+  setCountDownSeconds(value: number) {
+    try {
+      storage.setItem(CountDownSeconds, value.toString());
+    } finally {
+      this.CountDownSeconds = value;
+    }
   }
 
   @action
-  getStopwatchRunning() {
-    return this.StopwatchRunning;
+  setCountDownRememberedSeconds(value: number) {
+    try {
+      storage.setItem(CountDownRememberedSeconds, value.toString());
+    } finally {
+      this.CountDownRememberedSeconds = value;
+    }
   }
 
   @action
-  getShouldReset() {
-    return this.ShouldReset;
+  setStopwatchSeconds(value: number) {
+    try {
+      storage.setItem(StopwatchSeconds, value.toString());
+    } finally {
+      this.StopwatchSeconds = value;
+    }
   }
 }
 

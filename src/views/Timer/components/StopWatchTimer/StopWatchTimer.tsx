@@ -1,10 +1,12 @@
 import cls from 'clsx';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import BottomBar from '@Timer/components/BottomBar';
 import BackGroundCircle from '@Timer/components/BackGroundCircle';
 import RunningBall from '@Timer/components/RunningBall';
 import { colors } from '@Timer/constants/colors';
 import { pad } from '@Timer/utils/format';
+import timerStore from '@Store/modules/timer';
 import styles from './StopWatchTimer.module.css';
 
 interface StopWatchTimerProps {
@@ -14,14 +16,9 @@ interface StopWatchTimerProps {
 }
 
 const StopWatchTimer = React.memo(
-  ({ active, isRunning, setIsRunning }: StopWatchTimerProps) => {
+  observer(({ active, isRunning, setIsRunning }: StopWatchTimerProps) => {
     const radius = 180;
 
-    const [seconds, setSeconds] = useState(
-      localStorage.getItem('stopWatchTimerSeconds')
-        ? parseInt(localStorage.getItem('stopWatchTimerSeconds') || '0')
-        : 0
-    );
     const [ballkey, setBallkey] = useState(0);
 
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -29,7 +26,7 @@ const StopWatchTimer = React.memo(
     useEffect(() => {
       if (isRunning) {
         intervalRef.current = setInterval(() => {
-          setSeconds(prev => prev + 1);
+          timerStore.setStopwatchSeconds(timerStore.StopwatchSeconds + 1);
         }, 10);
       } else {
         if (intervalRef.current) {
@@ -41,10 +38,6 @@ const StopWatchTimer = React.memo(
       };
     }, [isRunning]);
 
-    useEffect(() => {
-      localStorage.setItem('stopWatchTimerSeconds', seconds.toString());
-    }, [seconds]);
-
     const handlePause = useCallback(() => setIsRunning(false), [setIsRunning]);
 
     const handleStart = useCallback(() => {
@@ -52,10 +45,10 @@ const StopWatchTimer = React.memo(
     }, [setIsRunning]);
 
     const handleReset = useCallback(() => {
-      setSeconds(0);
+      timerStore.setStopwatchSeconds(0);
       setIsRunning(false);
       setBallkey(prev => prev + 1);
-    }, [setSeconds, setIsRunning]);
+    }, [setIsRunning]);
 
     const formatTime = useCallback((s: number) => {
       const totalSeconds = Math.floor(s / 100);
@@ -104,16 +97,18 @@ const StopWatchTimer = React.memo(
               centerX={200}
               centerY={200}
               ballRadius={10}
-              currentTime={seconds}
+              currentTime={timerStore.StopwatchSeconds}
               totalTime={4}
             />
           </svg>
           <div className={styles.centerContent}>
-            <div className={styles.timeText}>{formatTime(seconds)}</div>
+            <div className={styles.timeText}>
+              {formatTime(timerStore.StopwatchSeconds)}
+            </div>
           </div>
         </div>
         <BottomBar
-          canReset={seconds !== 0}
+          canReset={timerStore.StopwatchSeconds !== 0}
           shouldReset={false}
           isRunning={isRunning}
           handlePause={handlePause}
@@ -122,7 +117,7 @@ const StopWatchTimer = React.memo(
         />
       </div>
     );
-  }
+  })
 );
 
 StopWatchTimer.displayName = 'StopWatchTimer';
