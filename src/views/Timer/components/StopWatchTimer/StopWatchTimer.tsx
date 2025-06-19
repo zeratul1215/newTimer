@@ -15,8 +15,8 @@ interface StopWatchTimerProps {
   setIsRunning: (isRunning: boolean) => void;
 }
 
-const StopWatchTimer = React.memo(
-  observer(({ active, isRunning, setIsRunning }: StopWatchTimerProps) => {
+const StopWatchTimer = observer(
+  React.memo(({ active, isRunning, setIsRunning }: StopWatchTimerProps) => {
     const radius = 180;
 
     const [ballkey, setBallkey] = useState(0);

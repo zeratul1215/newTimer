@@ -21,8 +21,8 @@ interface CountDownTimerProps {
   setShouldReset: (shouldReset: boolean) => void;
 }
 
-const CountDownTimer = React.memo(
-  observer(
+const CountDownTimer = observer(
+  React.memo(
     ({
       active,
       isRunning,
