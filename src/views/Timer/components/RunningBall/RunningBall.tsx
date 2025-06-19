@@ -1,4 +1,3 @@
-import cls from 'clsx';
 import styles from './RunningBall.module.css';
 
 const RunningBall = ({
@@ -8,7 +7,9 @@ const RunningBall = ({
   idleColor,
   centerX = 200,
   centerY = 200,
-  ballRadius = 10
+  ballRadius = 10,
+  currentTime = 0,
+  totalTime = 400
 }: {
   isRunning: boolean;
   radius: number;
@@ -17,15 +18,18 @@ const RunningBall = ({
   centerX?: number;
   centerY?: number;
   ballRadius?: number;
+  currentTime?: number;
+  totalTime?: number;
 }) => {
+  const rotationAngle = (currentTime / (totalTime * 100)) * 360;
+
   const ballStyle = {
-    '--ball-origin-x': `${centerX}px`,
-    '--ball-origin-y': `${centerY}px`
+    transform: `rotate(${rotationAngle}deg)`
   } as React.CSSProperties;
 
   return (
     <circle
-      className={cls(styles.movingBall, isRunning && styles.running)}
+      className={styles.movingBall}
       cx={centerX}
       cy={centerY - radius} // 从12点钟位置开始
       r={ballRadius} // 小球半径

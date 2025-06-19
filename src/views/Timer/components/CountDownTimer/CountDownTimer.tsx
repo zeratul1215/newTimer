@@ -28,8 +28,18 @@ const CountDownTimer = React.memo(
     shouldReset,
     setShouldReset
   }: CountDownTimerProps) => {
-    const [seconds, setSeconds] = useState(INITIAL_SECONDS);
-    const [rememberedSeconds, setRememberedSeconds] = useState(INITIAL_SECONDS);
+    const [seconds, setSeconds] = useState(
+      localStorage.getItem('countDownTimerSeconds')
+        ? parseInt(localStorage.getItem('countDownTimerSeconds') || '0')
+        : INITIAL_SECONDS
+    );
+    const [rememberedSeconds, setRememberedSeconds] = useState(
+      localStorage.getItem('countDownTimerRememberedSeconds')
+        ? parseInt(
+            localStorage.getItem('countDownTimerRememberedSeconds') || '0'
+          )
+        : INITIAL_SECONDS
+    );
     const [editingTime, setEditingTime] = useState(false);
     const [isTimeUp, setIsTimeUp] = useState(false);
 
@@ -82,6 +92,17 @@ const CountDownTimer = React.memo(
       setIsRunning,
       setShouldReset
     ]);
+
+    useEffect(() => {
+      localStorage.setItem(
+        'countDownTimerRememberedSeconds',
+        rememberedSeconds.toString()
+      );
+    }, [rememberedSeconds]);
+
+    useEffect(() => {
+      localStorage.setItem('countDownTimerSeconds', seconds.toString());
+    }, [seconds]);
 
     // 时间格式化 用来显示非编辑状态下的时间
     const formatTime = useCallback((s: number) => {
