@@ -1,5 +1,6 @@
 import cls from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
+
 import { observer } from 'mobx-react-lite';
 import BottomBar from '@Timer/components/BottomBar';
 import BackGroundCircle from '@Timer/components/BackGroundCircle';
@@ -17,6 +18,7 @@ interface StopWatchTimerProps {
 
 const StopWatchTimer = observer(
   ({ active, isRunning, setIsRunning }: StopWatchTimerProps) => {
+
     const radius = 180;
 
     const [ballkey, setBallkey] = useState(0);

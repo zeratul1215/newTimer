@@ -63,6 +63,7 @@ const CountDownTimer = observer(
           if (intervalRef.current) {
             clearInterval(intervalRef.current);
             intervalRef.current = null;
+
           }
         }
       } else {
@@ -74,6 +75,7 @@ const CountDownTimer = observer(
         }
       }
     }, [isTimeUp, shouldReset, isRunning, setIsRunning, setShouldReset]);
+
 
     // 时间格式化 用来显示非编辑状态下的时间
     const formatTime = useCallback((s: number) => {
@@ -170,6 +172,7 @@ const CountDownTimer = observer(
       }
       setEditingTime(false);
     }, [inputValue, parseTime]);
+
 
     const handleInputChange = useCallback(() => {
       // 禁止直接编辑
