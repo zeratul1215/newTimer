@@ -18,7 +18,6 @@ interface StopWatchTimerProps {
 
 const StopWatchTimer = observer(
   ({ active, isRunning, setIsRunning }: StopWatchTimerProps) => {
-
     const radius = 180;
 
     const [ballkey, setBallkey] = useState(0);
