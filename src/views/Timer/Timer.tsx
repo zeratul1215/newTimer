@@ -1,45 +1,21 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import cls from 'clsx';
+import { observer } from 'mobx-react-lite';
 import CountDownTimer from '@Timer/components/CountDownTimer';
 import StopWatchTimer from '@Timer/components/StopWatchTimer';
 import TopBar from '@Timer/components/TopBar';
 import { useTitle } from '@/hooks';
-
-import styles from './timer.module.css';
 import { useFocusTrap } from '@linktivity/link-hooks';
 import { TimerTab } from '@Timer/types/timerTab';
+import styles from './timer.module.css';
 
-const Timer = () => {
+import timerStore from '../../store/modules/timer';
+
+const Timer = observer(() => {
   const [activeTab, setActiveTab] = useState<TimerTab>('countDownTimer');
   const { t } = useTranslation();
   const focusTrapRef = useFocusTrap(true);
-
-  const [isCountDownTimerRunning, setIsCountDownTimerRunning] = useState(
-    localStorage.getItem('isCountDownTimerRunning') === 'true' ? true : false
-  );
-  const [isStopwatchRunning, setIsStopwatchRunning] = useState(
-    localStorage.getItem('isStopwatchRunning') === 'true' ? true : false
-  );
-  const [shouldReset, setShouldReset] = useState(
-    localStorage.getItem('shouldReset') === 'true' ? true : false
-  );
-
-  // 保存计时器状态到本地存储
-  useEffect(() => {
-    localStorage.setItem(
-      'isCountDownTimerRunning',
-      isCountDownTimerRunning.toString()
-    );
-  }, [isCountDownTimerRunning]);
-
-  useEffect(() => {
-    localStorage.setItem('isStopwatchRunning', isStopwatchRunning.toString());
-  }, [isStopwatchRunning]);
-
-  useEffect(() => {
-    localStorage.setItem('shouldReset', shouldReset.toString());
-  }, [shouldReset]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -63,10 +39,10 @@ const Timer = () => {
       <div
         className={cls(
           styles.wholeContainer,
-          (activeTab === 'countDownTimer' && isCountDownTimerRunning) ||
-            (activeTab === 'stopwatch' && isStopwatchRunning)
+          (activeTab === 'countDownTimer' && timerStore.CountDownRunning) ||
+            (activeTab === 'stopwatch' && timerStore.StopwatchRunning)
             ? styles.wholeContainerRunning
-            : activeTab === 'countDownTimer' && shouldReset
+            : activeTab === 'countDownTimer' && timerStore.ShouldReset
               ? styles.wholeContainerShouldReset
               : styles.wholeContainerIdle
         )}
@@ -79,19 +55,19 @@ const Timer = () => {
         />
         <CountDownTimer
           active={activeTab === 'countDownTimer'}
-          isRunning={isCountDownTimerRunning}
-          setIsRunning={setIsCountDownTimerRunning}
-          shouldReset={shouldReset}
-          setShouldReset={setShouldReset}
+          isRunning={timerStore.CountDownRunning}
+          setIsRunning={value => timerStore.setCountDownRunning(value)}
+          shouldReset={timerStore.ShouldReset}
+          setShouldReset={value => timerStore.setShouldReset(value)}
         />
         <StopWatchTimer
           active={activeTab === 'stopwatch'}
-          isRunning={isStopwatchRunning}
-          setIsRunning={setIsStopwatchRunning}
+          isRunning={timerStore.StopwatchRunning}
+          setIsRunning={value => timerStore.setStopwatchRunning(value)}
         />
       </div>
     </>
   );
-};
+});
 
 export default Timer;
