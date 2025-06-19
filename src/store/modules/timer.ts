@@ -7,11 +7,10 @@ const ShouldReset = 'shouldReset';
 
 export class timerStore {
   @observable accessor CountDownRunning =
-    storage.getItem(CountDownRunning) === 'true' ? true : false || false;
+    storage.getItem(CountDownRunning) === 'true';
   @observable accessor StopwatchRunning =
-    storage.getItem(StopwatchRunning) === 'true' ? true : false || false;
-  @observable accessor ShouldReset =
-    storage.getItem(ShouldReset) === 'true' ? true : false || false;
+    storage.getItem(StopwatchRunning) === 'true';
+  @observable accessor ShouldReset = storage.getItem(ShouldReset) === 'true';
 
   @action
   setCountDownRunning(value: boolean) {
