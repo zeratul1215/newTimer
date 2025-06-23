@@ -31,7 +31,7 @@ const Timer = observer(() => {
     [activeTab]
   );
 
-  useBeforeUnload();
+  useBeforeUnload(timerStore.CountDownRunning || timerStore.StopwatchRunning);
 
   useTitle(t('views.timer.title'));
 
