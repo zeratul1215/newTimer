@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import cls from 'clsx';
 import { observer } from 'mobx-react-lite';
@@ -10,6 +10,7 @@ import { useTitle } from '@/hooks';
 import { TimerTab } from '@Timer/types/timerTab';
 import timerStore from '@Store/modules/timer';
 import styles from './timer.module.css';
+import { addUnloadEvent } from './utils/confirm';
 
 const Timer = observer(() => {
   const [activeTab, setActiveTab] = useState<TimerTab>('countDownTimer');
@@ -30,6 +31,10 @@ const Timer = observer(() => {
     },
     [activeTab]
   );
+
+  useEffect(() => {
+    addUnloadEvent();
+  }, []);
 
   useTitle(t('views.timer.title'));
 
