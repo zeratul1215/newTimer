@@ -6,7 +6,7 @@ import { useFocusTrap } from '@linktivity/link-hooks';
 import CountDownTimer from '@Timer/components/CountDownTimer';
 import StopWatchTimer from '@Timer/components/StopWatchTimer';
 import TopBar from '@Timer/components/TopBar';
-import { useTitle } from '@/hooks';
+import { useTitle, useBeforeUnload } from '@/hooks';
 import { TimerTab } from '@Timer/types/timerTab';
 import timerStore from '@Store/modules/timer';
 import styles from './timer.module.css';
@@ -14,11 +14,11 @@ import styles from './timer.module.css';
 const Timer = observer(() => {
   const [activeTab, setActiveTab] = useState<TimerTab>('countDownTimer');
   const { t } = useTranslation();
+
   const focusTrapRef = useFocusTrap(true);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
-      // e.preventDefault();
       if (e.key === 'Tab') {
         e.preventDefault();
         if (activeTab === 'countDownTimer') {
@@ -30,6 +30,8 @@ const Timer = observer(() => {
     },
     [activeTab]
   );
+
+  useBeforeUnload(timerStore.CountDownRunning || timerStore.StopwatchRunning);
 
   useTitle(t('views.timer.title'));
 
