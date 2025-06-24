@@ -1,3 +1,9 @@
 .movingBall {
   transform-origin: var(--ball-origin-x, 200px) var(--ball-origin-y, 200px); /* 圆心位置 */
 }
+
+@media (--view-xs) {
+  .movingBall {
+    transform-origin: var(--ball-origin-x, 150px) var(--ball-origin-y, 150px);
+  }
+}

@@ -5,8 +5,9 @@ const BackGroundCircle = ({
   isRunning,
   runningColor,
   idleColor,
-  centerX = 200,
-  centerY = 200
+  centerX,
+  centerY,
+  strokeWidth
 }: {
   radius: number;
   isRunning: boolean;
@@ -14,6 +15,7 @@ const BackGroundCircle = ({
   idleColor?: string;
   centerX?: number;
   centerY?: number;
+  strokeWidth?: number;
 }) => {
   return (
     <circle
@@ -23,7 +25,7 @@ const BackGroundCircle = ({
       r={radius}
       fill="none"
       stroke={isRunning ? runningColor : idleColor}
-      strokeWidth={10}
+      strokeWidth={strokeWidth}
     />
   );
 };

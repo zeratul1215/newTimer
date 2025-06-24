@@ -9,6 +9,8 @@ import ProgressCircle from '@Timer/components/ProgressCircle';
 import { pad } from '@Timer/utils/format';
 import timerStore from '@Store/modules/timer';
 import styles from './CountDownTimer.module.css';
+import { useWindowSize } from '@/hooks';
+import { calculateResponsiveSize } from '../../utils/calculateResponsiveSize';
 
 const TIME_FORMAT_REGEX = /(\d{2})(\d{2})(\d{2})/;
 const MAX_TIME_SECONDS = 99 * 3600 * 10 + 59 * 60 * 10 + 59 * 10; // 99:59:59 in tenths of seconds
@@ -29,6 +31,10 @@ const CountDownTimer = observer(
     shouldReset,
     setShouldReset
   }: CountDownTimerProps) => {
+    const { width } = useWindowSize();
+    const { containerSize, radius, strokeWidth } =
+      calculateResponsiveSize(width);
+
     const [editingTime, setEditingTime] = useState(false);
     const [isTimeUp, setIsTimeUp] = useState(false);
 
@@ -115,9 +121,6 @@ const CountDownTimer = observer(
       const s = parseInt(str.slice(4, 6), 10);
       return (h * 3600 + m * 60 + s) * 10;
     }, []);
-
-    // 圆环动画参数
-    const radius = 180;
 
     // 按钮事件
     const handleStart = useCallback(() => {
@@ -217,15 +220,20 @@ const CountDownTimer = observer(
             }
           }}
         >
-          <svg width={400} height={400} className={styles.circleSvg}>
+          <svg
+            width={containerSize}
+            height={containerSize}
+            className={styles.circleSvg}
+          >
             {/* 背景 */}
             <BackGroundCircle
               radius={radius}
               isRunning={isRunning}
               runningColor={colors.background.running}
               idleColor={colors.background.idle}
-              centerX={200}
-              centerY={200}
+              centerX={containerSize / 2}
+              centerY={containerSize / 2}
+              strokeWidth={strokeWidth}
             />
             {/* 进度条 */}
             <ProgressCircle
@@ -233,9 +241,9 @@ const CountDownTimer = observer(
               isRunning={isRunning}
               totalTime={timerStore.CountDownRememberedSeconds}
               passedTime={timerStore.CountDownSeconds}
-              centerX={200}
-              centerY={200}
-              strokeWidth={10}
+              centerX={containerSize / 2}
+              centerY={containerSize / 2}
+              strokeWidth={strokeWidth}
               runningColor={colors.progress.running}
               idleColor={colors.progress.idle}
             />
