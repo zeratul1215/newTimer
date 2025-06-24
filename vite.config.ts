@@ -8,7 +8,13 @@ export default defineConfig(({ mode }) => {
   return {
     server: {
       host: true,
-      port: 3300
+      port: 3300,
+      allowedHosts: [
+        'localhost',
+        '127.0.0.1',
+        '.ngrok-free.app', // 允许所有 ngrok 域名
+        '.ngrok.io' // 备用 ngrok 域名
+      ]
     },
     resolve: {
       alias: {
