@@ -25,7 +25,7 @@ export function useBeforeUnload(enabled: boolean = false) {
 }
 
 // 防抖 Hook
-export function useDebounce<T extends (...args: any[]) => any>(
+export function useDebounce<T extends (...args: never[]) => void>(
   callback: T,
   delay: number
 ): T {
