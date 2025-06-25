@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 
 export function useTitle(title: string) {
   useEffect(() => {
@@ -24,23 +24,48 @@ export function useBeforeUnload(enabled: boolean = false) {
   }, [enabled]);
 }
 
-export function useWindowSize() {
+// 防抖 Hook
+export function useDebounce<T extends (...args: any[]) => any>(
+  callback: T,
+  delay: number
+): T {
+  const timeoutRef = useRef<number>();
+
+  return useCallback(
+    (...args: Parameters<T>) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        callback(...args);
+      }, delay);
+    },
+    [callback, delay]
+  ) as T;
+}
+
+export function useWindowSize(debounceDelay: number = 100) {
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight
   });
 
+  const debouncedSetWindowSize = useDebounce(
+    (width: number, height: number) => {
+      setWindowSize({ width, height });
+    },
+    debounceDelay
+  );
+
   useEffect(() => {
     const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
+      debouncedSetWindowSize(window.innerWidth, window.innerHeight);
     };
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [debouncedSetWindowSize]);
 
   return windowSize;
 }
