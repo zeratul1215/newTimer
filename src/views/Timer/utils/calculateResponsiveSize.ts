@@ -1,5 +1,7 @@
+const mobileSize = 425;
+
 export const calculateResponsiveSize = (screenWidth: number) => {
-  if (screenWidth <= 425) {
+  if (screenWidth <= mobileSize) {
     // 手机小屏
     return {
       containerSize: 300,
