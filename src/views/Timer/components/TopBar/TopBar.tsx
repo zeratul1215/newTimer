@@ -2,9 +2,9 @@ import { Button } from '@linktivity/link-ui';
 import cls from 'clsx';
 import styles from './TopBar.module.css';
 import { useTranslation } from 'react-i18next';
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 
-import { TimerTab } from '@Timer/types/timerTab';
+import { TimerTab, TIMER_TABS } from '@Timer/types/timerTab';
 
 const TopBar = forwardRef<
   HTMLDivElement,
@@ -15,15 +15,21 @@ const TopBar = forwardRef<
 >(({ activeTab, setActiveTab }, ref) => {
   const { t } = useTranslation();
 
+  // 使用 useMemo 缓存常量值
+  const countDownTimerTab = useMemo(() => TIMER_TABS.COUNT_DOWN_TIMER, []);
+  const stopwatchTab = useMemo(() => TIMER_TABS.STOPWATCH, []);
+
   return (
     <div className={styles.topBar} ref={ref}>
       <Button
         className={cls(
-          activeTab === 'countDownTimer' ? styles.tabActive : styles.tabInactive
+          activeTab === countDownTimerTab
+            ? styles.tabActive
+            : styles.tabInactive
         )}
         onClick={() => {
-          if (activeTab !== 'countDownTimer') {
-            setActiveTab('countDownTimer');
+          if (activeTab !== countDownTimerTab) {
+            setActiveTab(countDownTimerTab);
           }
         }}
       >
@@ -31,11 +37,11 @@ const TopBar = forwardRef<
       </Button>
       <Button
         className={cls(
-          activeTab === 'stopwatch' ? styles.tabActive : styles.tabInactive
+          activeTab === stopwatchTab ? styles.tabActive : styles.tabInactive
         )}
         onClick={() => {
-          if (activeTab !== 'stopwatch') {
-            setActiveTab('stopwatch');
+          if (activeTab !== stopwatchTab) {
+            setActiveTab(stopwatchTab);
           }
         }}
       >
@@ -44,5 +50,7 @@ const TopBar = forwardRef<
     </div>
   );
 });
+
+TopBar.displayName = 'TopBar';
 
 export default TopBar;
