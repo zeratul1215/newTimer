@@ -9,8 +9,7 @@ import TopBar from '@Timer/components/TopBar';
 import { useTitle, useBeforeUnload } from '@/hooks';
 import { TimerTab, TIMER_TABS } from '@Timer/types/timerTab';
 import { TimerSizeProvider } from '@Timer/context/TimerSizeProvider';
-import timerStore from '@Store/modules/timer';
-// import { StoreProvider, store } from '@Store/index';
+import { useStore } from '@Store/index';
 import styles from './timer.module.css';
 
 const TimerContent = observer(() => {
@@ -20,6 +19,8 @@ const TimerContent = observer(() => {
 
   const [activeTab, setActiveTab] = useState<TimerTab>(countDownTimerTab);
   const { t } = useTranslation();
+
+  const { timerStore } = useStore();
 
   const focusTrapRef = useFocusTrap(true);
 
@@ -72,16 +73,13 @@ const TimerContent = observer(() => {
         setIsRunning={value => timerStore.setStopwatchRunning(value)}
       />
     </div>
-
   );
 });
 
 const Timer = () => {
   return (
     <TimerSizeProvider>
-      {/* <StoreProvider value={store}> */}
       <TimerContent />
-      {/* </StoreProvider> */}
     </TimerSizeProvider>
   );
 };
