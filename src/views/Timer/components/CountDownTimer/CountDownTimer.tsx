@@ -7,8 +7,8 @@ import BackGroundCircle from '@Timer/components/BackGroundCircle';
 import { colors } from '@Timer/constants/colors';
 import ProgressCircle from '@Timer/components/ProgressCircle';
 import { pad } from '@Timer/utils/format';
-import { useTimerSize } from '@Timer/context/TimerSizeContext';
-import timerStore from '@Store/modules/timer';
+import { useTimerSize } from '@Timer/context/useTimerSize';
+import { useStore } from '@Store/index';
 import styles from './CountDownTimer.module.css';
 
 const TIME_FORMAT_REGEX = /(\d{2})(\d{2})(\d{2})/;
@@ -33,10 +33,11 @@ const CountDownTimer = observer(
     const { containerSize, radius, strokeWidth, centerX, centerY } =
       useTimerSize();
 
+    const { timerStore } = useStore();
+
     const [editingTime, setEditingTime] = useState(false);
     const [isTimeUp, setIsTimeUp] = useState(false);
 
-    // inputValue 始终为6位数字字符串
     const [inputValue, setInputValue] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -47,27 +48,26 @@ const CountDownTimer = observer(
         intervalRef.current = setInterval(() => {
           timerStore.setCountDownSeconds(timerStore.CountDownSeconds - 1);
         }, 100);
-      } else if (!isRunning && intervalRef.current) {
-        //切换成非运行状态，为计时器清楚定时器，防止内存泄漏
+      } else if (
+        (!isRunning || timerStore.CountDownSeconds <= 0) &&
+        intervalRef.current
+      ) {
+        //切换成非运行状态或时间归零时，清除定时器，防止内存泄漏
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
       return () => {
         if (intervalRef.current) clearInterval(intervalRef.current);
       };
-    }, [isRunning]);
+    }, [isRunning, timerStore, timerStore.CountDownSeconds]);
 
     useEffect(() => {
-      if (timerStore.CountDownSeconds == 0) {
+      if (timerStore.CountDownSeconds <= 0) {
         //当时间归零的时候，判断是否是由于倒计时归零，
         setIsTimeUp(true);
         if (isRunning) {
           setShouldReset(true);
           setIsRunning(false);
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-          }
         }
       } else {
         if (isTimeUp) {
@@ -77,7 +77,15 @@ const CountDownTimer = observer(
           }
         }
       }
-    }, [isTimeUp, shouldReset, isRunning, setIsRunning, setShouldReset]);
+    }, [
+      timerStore.CountDownSeconds,
+      timerStore,
+      isTimeUp,
+      shouldReset,
+      isRunning,
+      setIsRunning,
+      setShouldReset
+    ]);
 
     // 时间格式化 用来显示非编辑状态下的时间
     const formatTime = useCallback((s: number) => {
@@ -135,14 +143,19 @@ const CountDownTimer = observer(
       }
       setIsRunning(false);
       timerStore.setCountDownSeconds(timerStore.CountDownRememberedSeconds);
-    }, [shouldReset, setIsRunning, setShouldReset]);
+    }, [shouldReset, setIsRunning, setShouldReset, timerStore]);
 
-    const handleAdd = useCallback((addSec: number) => {
-      timerStore.setCountDownSeconds(timerStore.CountDownSeconds + addSec * 10);
-      timerStore.setCountDownRememberedSeconds(
-        timerStore.CountDownRememberedSeconds + addSec * 10
-      );
-    }, []);
+    const handleAdd = useCallback(
+      (addSec: number) => {
+        timerStore.setCountDownSeconds(
+          timerStore.CountDownSeconds + addSec * 10
+        );
+        timerStore.setCountDownRememberedSeconds(
+          timerStore.CountDownRememberedSeconds + addSec * 10
+        );
+      },
+      [timerStore]
+    );
 
     // 编辑时间相关
     const handleTimeClick = useCallback(() => {
@@ -158,7 +171,7 @@ const CountDownTimer = observer(
           inputRef.current?.focus();
         }, 0);
       }
-    }, [isRunning]);
+    }, [isRunning, timerStore]);
 
     const handleInputBlur = useCallback(() => {
       const parsed = parseTime(inputValue);
@@ -167,7 +180,7 @@ const CountDownTimer = observer(
         timerStore.setCountDownRememberedSeconds(parsed);
       }
       setEditingTime(false);
-    }, [inputValue, parseTime]);
+    }, [inputValue, parseTime, timerStore]);
 
     const handleInputChange = useCallback(() => {
       // 禁止直接编辑

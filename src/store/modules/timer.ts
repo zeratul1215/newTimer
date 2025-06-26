@@ -10,7 +10,7 @@ const CountDownRememberedSeconds = 'countDownRememberedSeconds';
 
 const INITIAL_SECONDS = 300 * 10;
 
-export class timerStore {
+export class TimerStore {
   @observable accessor CountDownRunning =
     storage.getItem(CountDownRunning) === 'true';
   @observable accessor StopwatchRunning =
@@ -85,4 +85,4 @@ export class timerStore {
   }
 }
 
-export default new timerStore();
+export default new TimerStore();

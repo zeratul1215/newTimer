@@ -8,8 +8,9 @@ import StopWatchTimer from '@Timer/components/StopWatchTimer';
 import TopBar from '@Timer/components/TopBar';
 import { useTitle, useBeforeUnload } from '@/hooks';
 import { TimerTab, TIMER_TABS } from '@Timer/types/timerTab';
-import { TimerSizeProvider } from '@Timer/context/TimerSizeContext';
+import { TimerSizeProvider } from '@Timer/context/TimerSizeProvider';
 import timerStore from '@Store/modules/timer';
+// import { StoreProvider, store } from '@Store/index';
 import styles from './timer.module.css';
 
 const TimerContent = observer(() => {
@@ -77,7 +78,9 @@ const TimerContent = observer(() => {
 const Timer = () => {
   return (
     <TimerSizeProvider>
+      {/* <StoreProvider value={store}> */}
       <TimerContent />
+      {/* </StoreProvider> */}
     </TimerSizeProvider>
   );
 };
