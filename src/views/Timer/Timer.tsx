@@ -72,6 +72,7 @@ const TimerContent = observer(() => {
         setIsRunning={value => timerStore.setStopwatchRunning(value)}
       />
     </div>
+
   );
 });
 
