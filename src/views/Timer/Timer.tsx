@@ -8,16 +8,19 @@ import StopWatchTimer from '@Timer/components/StopWatchTimer';
 import TopBar from '@Timer/components/TopBar';
 import { useTitle, useBeforeUnload } from '@/hooks';
 import { TimerTab, TIMER_TABS } from '@Timer/types/timerTab';
-import timerStore from '@Store/modules/timer';
+import { TimerSizeProvider } from '@Timer/context/TimerSizeProvider';
+import { useStore } from '@Store/index';
 import styles from './timer.module.css';
 
-const Timer = observer(() => {
+const TimerContent = observer(() => {
   // 使用 useMemo 缓存常量值
   const countDownTimerTab = useMemo(() => TIMER_TABS.COUNT_DOWN_TIMER, []);
   const stopwatchTab = useMemo(() => TIMER_TABS.STOPWATCH, []);
 
   const [activeTab, setActiveTab] = useState<TimerTab>(countDownTimerTab);
   const { t } = useTranslation();
+
+  const { timerStore } = useStore();
 
   const focusTrapRef = useFocusTrap(true);
 
@@ -40,39 +43,45 @@ const Timer = observer(() => {
   useTitle(t('views.timer.title'));
 
   return (
-    <>
-      <div
-        className={cls(
-          styles.wholeContainer,
-          (activeTab === countDownTimerTab && timerStore.CountDownRunning) ||
-            (activeTab === stopwatchTab && timerStore.StopwatchRunning)
-            ? styles.wholeContainerRunning
-            : activeTab === countDownTimerTab && timerStore.ShouldReset
-              ? styles.wholeContainerShouldReset
-              : styles.wholeContainerIdle
-        )}
-        onKeyDown={handleKeyDown}
-      >
-        <TopBar
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          ref={focusTrapRef}
-        />
-        <CountDownTimer
-          active={activeTab === countDownTimerTab}
-          isRunning={timerStore.CountDownRunning}
-          setIsRunning={value => timerStore.setCountDownRunning(value)}
-          shouldReset={timerStore.ShouldReset}
-          setShouldReset={value => timerStore.setShouldReset(value)}
-        />
-        <StopWatchTimer
-          active={activeTab === stopwatchTab}
-          isRunning={timerStore.StopwatchRunning}
-          setIsRunning={value => timerStore.setStopwatchRunning(value)}
-        />
-      </div>
-    </>
+    <div
+      className={cls(
+        styles.wholeContainer,
+        (activeTab === countDownTimerTab && timerStore.CountDownRunning) ||
+          (activeTab === stopwatchTab && timerStore.StopwatchRunning)
+          ? styles.wholeContainerRunning
+          : activeTab === countDownTimerTab && timerStore.ShouldReset
+            ? styles.wholeContainerShouldReset
+            : styles.wholeContainerIdle
+      )}
+      onKeyDown={handleKeyDown}
+    >
+      <TopBar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        ref={focusTrapRef}
+      />
+      <CountDownTimer
+        active={activeTab === countDownTimerTab}
+        isRunning={timerStore.CountDownRunning}
+        setIsRunning={value => timerStore.setCountDownRunning(value)}
+        shouldReset={timerStore.ShouldReset}
+        setShouldReset={value => timerStore.setShouldReset(value)}
+      />
+      <StopWatchTimer
+        active={activeTab === stopwatchTab}
+        isRunning={timerStore.StopwatchRunning}
+        setIsRunning={value => timerStore.setStopwatchRunning(value)}
+      />
+    </div>
   );
 });
+
+const Timer = () => {
+  return (
+    <TimerSizeProvider>
+      <TimerContent />
+    </TimerSizeProvider>
+  );
+};
 
 export default Timer;

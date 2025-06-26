@@ -7,10 +7,9 @@ import BackGroundCircle from '@Timer/components/BackGroundCircle';
 import RunningBall from '@Timer/components/RunningBall';
 import { colors } from '@Timer/constants/colors';
 import { pad } from '@Timer/utils/format';
-import timerStore from '@Store/modules/timer';
+import { useTimerSize } from '@Timer/context/useTimerSize';
+import { useStore } from '@Store/index';
 import styles from './StopWatchTimer.module.css';
-import { useWindowSize } from '@/hooks';
-import { calculateResponsiveSize } from '../../utils/calculateResponsiveSize';
 
 interface StopWatchTimerProps {
   active: boolean;
@@ -20,9 +19,10 @@ interface StopWatchTimerProps {
 
 const StopWatchTimer = observer(
   ({ active, isRunning, setIsRunning }: StopWatchTimerProps) => {
-    const { width } = useWindowSize();
-    const { containerSize, radius, strokeWidth } =
-      calculateResponsiveSize(width);
+    const { containerSize, radius, strokeWidth, centerX, centerY } =
+      useTimerSize();
+
+    const { timerStore } = useStore();
 
     const [ballkey, setBallkey] = useState(0);
 
@@ -41,7 +41,7 @@ const StopWatchTimer = observer(
       return () => {
         if (intervalRef.current) clearInterval(intervalRef.current);
       };
-    }, [isRunning]);
+    }, [isRunning, timerStore]);
 
     const handlePause = useCallback(() => setIsRunning(false), [setIsRunning]);
 
@@ -53,7 +53,7 @@ const StopWatchTimer = observer(
       timerStore.setStopwatchSeconds(0);
       setIsRunning(false);
       setBallkey(prev => prev + 1);
-    }, [setIsRunning]);
+    }, [setIsRunning, timerStore]);
 
     const formatTime = useCallback((s: number) => {
       const totalSeconds = Math.floor(s / 100);
@@ -83,15 +83,19 @@ const StopWatchTimer = observer(
             }
           }}
         >
-          <svg width={400} height={400} className={styles.circleSvg}>
+          <svg
+            width={containerSize}
+            height={containerSize}
+            className={styles.circleSvg}
+          >
             {/* 背景 */}
             <BackGroundCircle
               radius={radius}
               isRunning={isRunning}
               runningColor={colors.progress.running}
               idleColor={colors.progress.idle}
-              centerX={containerSize / 2}
-              centerY={containerSize / 2}
+              centerX={centerX}
+              centerY={centerY}
               strokeWidth={strokeWidth}
             />
             <RunningBall
@@ -100,8 +104,8 @@ const StopWatchTimer = observer(
               radius={radius}
               runningColor={colors.background.running}
               idleColor={colors.background.idle}
-              centerX={containerSize / 2}
-              centerY={containerSize / 2}
+              centerX={centerX}
+              centerY={centerY}
               ballRadius={10}
               currentTime={timerStore.StopwatchSeconds}
               totalTime={4}
