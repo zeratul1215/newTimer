@@ -19,6 +19,7 @@
   width: 400px;
   height: 400px;
   margin: 0 auto 32px auto;
+  /* transition: width 0.3s ease, height 0.3s ease; */
 
   &Idle {
     cursor: default;
@@ -37,6 +38,7 @@
   width: 400px;
   height: 400px;
   z-index: 1;
+  /* transition: width 0.3s ease, height 0.3s ease; */
 }
 
 .circleSvg .backgroundCircle {
@@ -62,6 +64,24 @@
   align-items: center;
   justify-content: center;
   z-index: 2;
+  /* transition: width 0.3s ease, height 0.3s ease; */
+}
+
+@media (--view-xs) {
+  .timerContainer {
+    width: 300px;
+    height: 300px;
+  }
+
+  .circleSvg {
+    width: 300px;
+    height: 300px;
+  }
+
+  .centerContent {
+    width: 300px;
+    height: 300px;
+  }
 }
 
 .timeText {

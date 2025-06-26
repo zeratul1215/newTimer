@@ -9,6 +9,8 @@ import { colors } from '@Timer/constants/colors';
 import { pad } from '@Timer/utils/format';
 import timerStore from '@Store/modules/timer';
 import styles from './StopWatchTimer.module.css';
+import { useWindowSize } from '@/hooks';
+import { calculateResponsiveSize } from '../../utils/calculateResponsiveSize';
 
 interface StopWatchTimerProps {
   active: boolean;
@@ -18,7 +20,9 @@ interface StopWatchTimerProps {
 
 const StopWatchTimer = observer(
   ({ active, isRunning, setIsRunning }: StopWatchTimerProps) => {
-    const radius = 180;
+    const { width } = useWindowSize();
+    const { containerSize, radius, strokeWidth } =
+      calculateResponsiveSize(width);
 
     const [ballkey, setBallkey] = useState(0);
 
@@ -86,8 +90,9 @@ const StopWatchTimer = observer(
               isRunning={isRunning}
               runningColor={colors.progress.running}
               idleColor={colors.progress.idle}
-              centerX={200}
-              centerY={200}
+              centerX={containerSize / 2}
+              centerY={containerSize / 2}
+              strokeWidth={strokeWidth}
             />
             <RunningBall
               key={ballkey}
@@ -95,8 +100,8 @@ const StopWatchTimer = observer(
               radius={radius}
               runningColor={colors.background.running}
               idleColor={colors.background.idle}
-              centerX={200}
-              centerY={200}
+              centerX={containerSize / 2}
+              centerY={containerSize / 2}
               ballRadius={10}
               currentTime={timerStore.StopwatchSeconds}
               totalTime={4}
