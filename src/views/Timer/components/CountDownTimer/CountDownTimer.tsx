@@ -7,10 +7,9 @@ import BackGroundCircle from '@Timer/components/BackGroundCircle';
 import { colors } from '@Timer/constants/colors';
 import ProgressCircle from '@Timer/components/ProgressCircle';
 import { pad } from '@Timer/utils/format';
+import { useTimerSize } from '@Timer/context/TimerSizeContext';
 import timerStore from '@Store/modules/timer';
 import styles from './CountDownTimer.module.css';
-import { useWindowSize } from '@/hooks';
-import { calculateResponsiveSize } from '../../utils/calculateResponsiveSize';
 
 const TIME_FORMAT_REGEX = /(\d{2})(\d{2})(\d{2})/;
 const MAX_TIME_SECONDS = 99 * 3600 * 10 + 59 * 60 * 10 + 59 * 10; // 99:59:59 in tenths of seconds
@@ -31,9 +30,8 @@ const CountDownTimer = observer(
     shouldReset,
     setShouldReset
   }: CountDownTimerProps) => {
-    const { width } = useWindowSize();
-    const { containerSize, radius, strokeWidth } =
-      calculateResponsiveSize(width);
+    const { containerSize, radius, strokeWidth, centerX, centerY } =
+      useTimerSize();
 
     const [editingTime, setEditingTime] = useState(false);
     const [isTimeUp, setIsTimeUp] = useState(false);
@@ -231,8 +229,8 @@ const CountDownTimer = observer(
               isRunning={isRunning}
               runningColor={colors.background.running}
               idleColor={colors.background.idle}
-              centerX={containerSize / 2}
-              centerY={containerSize / 2}
+              centerX={centerX}
+              centerY={centerY}
               strokeWidth={strokeWidth}
             />
             {/* 进度条 */}
@@ -241,8 +239,8 @@ const CountDownTimer = observer(
               isRunning={isRunning}
               totalTime={timerStore.CountDownRememberedSeconds}
               passedTime={timerStore.CountDownSeconds}
-              centerX={containerSize / 2}
-              centerY={containerSize / 2}
+              centerX={centerX}
+              centerY={centerY}
               strokeWidth={strokeWidth}
               runningColor={colors.progress.running}
               idleColor={colors.progress.idle}
