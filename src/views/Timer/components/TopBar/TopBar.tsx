@@ -4,7 +4,7 @@ import styles from './TopBar.module.css';
 import { useTranslation } from 'react-i18next';
 import { forwardRef } from 'react';
 
-import { TimerTab } from '@Timer/types/timerTab';
+import { TimerTab, TIMER_TABS } from '@Timer/types/timerTab';
 
 const TopBar = forwardRef<
   HTMLDivElement,
@@ -19,11 +19,13 @@ const TopBar = forwardRef<
     <div className={styles.topBar} ref={ref}>
       <Button
         className={cls(
-          activeTab === 'countDownTimer' ? styles.tabActive : styles.tabInactive
+          activeTab === TIMER_TABS.COUNT_DOWN_TIMER
+            ? styles.tabActive
+            : styles.tabInactive
         )}
         onClick={() => {
-          if (activeTab !== 'countDownTimer') {
-            setActiveTab('countDownTimer');
+          if (activeTab !== TIMER_TABS.COUNT_DOWN_TIMER) {
+            setActiveTab(TIMER_TABS.COUNT_DOWN_TIMER);
           }
         }}
       >
@@ -31,11 +33,13 @@ const TopBar = forwardRef<
       </Button>
       <Button
         className={cls(
-          activeTab === 'stopwatch' ? styles.tabActive : styles.tabInactive
+          activeTab === TIMER_TABS.STOPWATCH
+            ? styles.tabActive
+            : styles.tabInactive
         )}
         onClick={() => {
-          if (activeTab !== 'stopwatch') {
-            setActiveTab('stopwatch');
+          if (activeTab !== TIMER_TABS.STOPWATCH) {
+            setActiveTab(TIMER_TABS.STOPWATCH);
           }
         }}
       >
@@ -44,5 +48,7 @@ const TopBar = forwardRef<
     </div>
   );
 });
+
+TopBar.displayName = 'TopBar';
 
 export default TopBar;

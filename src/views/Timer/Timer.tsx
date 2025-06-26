@@ -7,12 +7,14 @@ import CountDownTimer from '@Timer/components/CountDownTimer';
 import StopWatchTimer from '@Timer/components/StopWatchTimer';
 import TopBar from '@Timer/components/TopBar';
 import { useTitle, useBeforeUnload } from '@/hooks';
-import { TimerTab } from '@Timer/types/timerTab';
+import { TimerTab, TIMER_TABS } from '@Timer/types/timerTab';
 import timerStore from '@Store/modules/timer';
 import styles from './timer.module.css';
 
 const Timer = observer(() => {
-  const [activeTab, setActiveTab] = useState<TimerTab>('countDownTimer');
+  const [activeTab, setActiveTab] = useState<TimerTab>(
+    TIMER_TABS.COUNT_DOWN_TIMER
+  );
   const { t } = useTranslation();
 
   const focusTrapRef = useFocusTrap(true);
@@ -21,10 +23,10 @@ const Timer = observer(() => {
     (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (e.key === 'Tab') {
         e.preventDefault();
-        if (activeTab === 'countDownTimer') {
-          setActiveTab('stopwatch');
+        if (activeTab === TIMER_TABS.COUNT_DOWN_TIMER) {
+          setActiveTab(TIMER_TABS.STOPWATCH);
         } else {
-          setActiveTab('countDownTimer');
+          setActiveTab(TIMER_TABS.COUNT_DOWN_TIMER);
         }
       }
     },
@@ -40,10 +42,12 @@ const Timer = observer(() => {
       <div
         className={cls(
           styles.wholeContainer,
-          (activeTab === 'countDownTimer' && timerStore.CountDownRunning) ||
-            (activeTab === 'stopwatch' && timerStore.StopwatchRunning)
+          (activeTab === TIMER_TABS.COUNT_DOWN_TIMER &&
+            timerStore.CountDownRunning) ||
+            (activeTab === TIMER_TABS.STOPWATCH && timerStore.StopwatchRunning)
             ? styles.wholeContainerRunning
-            : activeTab === 'countDownTimer' && timerStore.ShouldReset
+            : activeTab === TIMER_TABS.COUNT_DOWN_TIMER &&
+                timerStore.ShouldReset
               ? styles.wholeContainerShouldReset
               : styles.wholeContainerIdle
         )}
@@ -55,14 +59,14 @@ const Timer = observer(() => {
           ref={focusTrapRef}
         />
         <CountDownTimer
-          active={activeTab === 'countDownTimer'}
+          active={activeTab === TIMER_TABS.COUNT_DOWN_TIMER}
           isRunning={timerStore.CountDownRunning}
           setIsRunning={value => timerStore.setCountDownRunning(value)}
           shouldReset={timerStore.ShouldReset}
           setShouldReset={value => timerStore.setShouldReset(value)}
         />
         <StopWatchTimer
-          active={activeTab === 'stopwatch'}
+          active={activeTab === TIMER_TABS.STOPWATCH}
           isRunning={timerStore.StopwatchRunning}
           setIsRunning={value => timerStore.setStopwatchRunning(value)}
         />
