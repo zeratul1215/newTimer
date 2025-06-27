@@ -2,8 +2,8 @@
   position: relative;
   width: var(--width-sidebar);
   flex: none;
-  background-color: var(--color-bg-0);
-  border-right: 1px solid var(--color-border-1);
+  background-color: var(--bg-primary);
+  border-right: 1px solid var(--border-color);
   z-index: var(--z-index-sidebar);
 }
 .inner {
@@ -33,17 +33,19 @@
   padding: 0 16px;
   display: flex;
   align-items: center;
-  color: var(--color-text-0);
+  color: var(--text-primary);
   text-decoration: none;
+  transition: background-color 0.3s ease;
 
   &:hover,
   &:focus {
     outline: none;
-    background-color: var(--color-tertiary-light-hover);
+    background-color: var(--bg-secondary);
   }
 
   &.activated {
-    background-color: var(--color-tertiary-light-selected);
+    background-color: var(--bg-tertiary);
+    color: var(--accent-color);
   }
 }
 

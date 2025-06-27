@@ -9,13 +9,13 @@
   flex-direction: column;
 
   &Idle {
-    background: var(--color-warning-light-hover);
+    background: var(--bg-secondary);
   }
   &Running {
-    background: var(--color-info-disabled);
+    background: var(--bg-tertiary);
   }
   &ShouldReset {
-    background: var(--color-danger-light-selected);
+    background: var(--bg-tertiary);
   }
 }
 
@@ -28,29 +28,31 @@
 
   .tabActive,
   .tabInactive {
-    color: var(--color-text-0);
+    color: var(--text-primary);
     border: none;
     padding: 4px 16px;
     font-weight: var(--font-weight-bold);
     display: flex;
     align-items: center;
+    transition: all 0.3s ease;
 
     &:hover {
-      background: var(--color-warning-light-hover);
+      background: var(--bg-secondary);
       border: none;
     }
 
     &:focus {
       border: none;
-      background: var(--color-warning-light-selected);
+      background: var(--bg-tertiary);
     }
   }
 
   .tabActive {
-    background: var(--color-warning-light-selected);
+    background: var(--accent-color);
+    color: white;
   }
 
   .tabInactive {
-    background: var(--color-warning-light-hover);
+    background: var(--bg-secondary);
   }
 }
