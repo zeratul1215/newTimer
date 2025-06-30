@@ -5,6 +5,7 @@ import { setLocale } from '../../i18n';
 import styles from './header.module.css';
 import { useBaseContext } from '../Base/context';
 import cls from 'clsx';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const Header = forwardRef<HTMLElement>((_props, ref) => {
   const { i18n, t } = useTranslation();
@@ -50,6 +51,7 @@ const Header = forwardRef<HTMLElement>((_props, ref) => {
             clearable={false}
             className={styles.select}
           />
+          <ThemeToggle />
         </div>
       </div>
     </header>
